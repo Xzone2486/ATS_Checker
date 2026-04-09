@@ -1,0 +1,79 @@
+Resume Enhancer 2 - User Manual
+
+1. Overview
+------------
+This project is a Next.js application built with create-next-app. It supports local development, production builds, and deployment on Vercel.
+
+2. Prerequisites
+----------------
+- Node.js (16+ recommended)
+- npm or yarn or pnpm or bun
+- (Optional) Git for cloning repository
+
+3. Clone repository
+--------------------
+1. git clone <your-repo-url>
+2. cd "Resume Enhancer 2"
+
+4. Install dependencies
+------------------------
+Using npm:
+  npm install
+Using yarn:
+  yarn install
+Using pnpm:
+  pnpm install
+Using bun:
+  bun install
+
+5. Run development server
+--------------------------
+Using npm:
+  npm run dev
+Using yarn:
+  yarn dev
+Using pnpm:
+  pnpm dev
+Using bun:
+  bun dev
+Open browser at http://localhost:3000
+
+6. Build for production
+------------------------
+Using npm:
+  npm run build
+Using yarn:
+  yarn build
+Using pnpm:
+  pnpm build
+Then run:
+  npm start
+
+7. Backend integration
+-----------------------
+- This repository currently appears frontend-only (Next.js app in src/app).
+- If a backend API is needed, integrate it with environment variables and API endpoints.
+  - create .env.local
+  - add keys like API_URL, NEXT_PUBLIC_API_URL, OPENAI_KEY, etc.
+  - use fetch or Next.js API routes in src/app/api or src/pages/api.
+- Example call:
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resume`, { method: 'POST', body: JSON.stringify({ ... }) })
+- Confirm CORS settings and authentication in backend service.
+
+8. Deployment
+--------------
+- Recommended: Vercel (easy integration with Next.js).
+- Alternative: Netlify, AWS, Azure, custom server.
+
+9. Notes
+--------
+- Main entry: src/app/page.tsx
+- Layouts: src/app/layout.tsx and nested folders (dashboard, profile, resume-builder, etc.)
+- Components: src/components/*
+- Adapt styling and fonts via tailwind.config.ts and src/app/globals.css
+
+10. Troubleshooting
+--------------------
+- If app fails to start, run `npm install` again and check Node version.
+- Ensure `next`, `react`, `react-dom` versions are compatible.
+- View console logs in browser for runtime errors.
