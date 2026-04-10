@@ -220,7 +220,6 @@ export default function AtsAnalysisPage() {
   const [jobRole, setJobRole] = useState("")
   const [showJobDropdown, setShowJobDropdown] = useState(false)
   const [filteredJobs, setFilteredJobs] = useState<JobExample[]>(JOB_EXAMPLES)
-  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 })
   const fileInputRef = useRef<HTMLInputElement>(null)
   const jobDropdownRef = useRef<HTMLDivElement>(null)
   const jobInputRef = useRef<HTMLDivElement>(null)
@@ -243,14 +242,6 @@ export default function AtsAnalysisPage() {
   }, [])
 
   const openDropdown = () => {
-    if (jobInputRef.current) {
-      const rect = jobInputRef.current.getBoundingClientRect()
-      setDropdownPos({
-        top: rect.bottom + window.scrollY + 6,
-        left: rect.left + window.scrollX,
-        width: rect.width,
-      })
-    }
     setShowJobDropdown(true)
   }
 
@@ -356,7 +347,7 @@ export default function AtsAnalysisPage() {
       <Header />
       <div className="h-10 relative z-10 flex-none" />
 
-      <div className="flex-1 container px-6 mx-auto py-8 relative z-10">
+      <div className="flex-1 container px-6 mx-auto py-8 relative z-20">
         <AnimatePresence mode="wait">
 
           {/* ─── UPLOAD STAGE ─── */}
@@ -436,7 +427,7 @@ export default function AtsAnalysisPage() {
                 </div>
 
                 {/* Optional Job Role */}
-                <div ref={jobDropdownRef} className="relative">
+                <div ref={jobDropdownRef} className="relative z-50">
                   <label className="block text-sm font-medium mb-2 text-muted-foreground">
                     Target Job Role <span className="text-xs opacity-60">(optional — improves accuracy)</span>
                   </label>
@@ -459,17 +450,11 @@ export default function AtsAnalysisPage() {
                     </button>
                   </div>
 
-                  {/* Rich Job Dropdown — fixed so it never clips under footer */}
+                  {/* Rich Job Dropdown */}
                   {showJobDropdown && filteredJobs.length > 0 && (
                     <div
-                      style={{
-                        position: "fixed",
-                        top: dropdownPos.top,
-                        left: dropdownPos.left,
-                        width: dropdownPos.width,
-                        zIndex: 9999,
-                      }}
-                      className="rounded-2xl border border-border bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden"
+                      className="absolute left-0 w-full z-[9999] mt-2 rounded-2xl border border-border bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden"
+                      style={{ top: "100%" }}
                     >
                       {/* Header bar */}
                       <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-zinc-50 dark:bg-zinc-800/60">
