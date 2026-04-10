@@ -12,10 +12,204 @@ import { BeforeAfterSlider } from "@/components/ats/BeforeAfterSlider"
 import { Button } from "@/components/ui/button"
 import {
   Upload, FileText, Loader2, Download, Share2,
-  CheckCircle2, Sparkles, X, FileUp, Zap, MessageCircle, Mail, ExternalLink
+  CheckCircle2, Sparkles, X, FileUp, Zap, MessageCircle, Mail, ExternalLink,
+  ChevronDown, Briefcase
 } from "lucide-react"
 
 type Stage = "upload" | "analyzing" | "results"
+
+interface JobExample {
+  title: string
+  company: string
+  level: string
+  badge: string
+  badgeColor: string
+  description: string
+  skills: string[]
+}
+
+const JOB_EXAMPLES: JobExample[] = [
+  {
+    title: "Senior Frontend Engineer",
+    company: "Google",
+    level: "Senior · IC4",
+    badge: "Tech",
+    badgeColor: "blue",
+    description: "Build next-gen web experiences with React, TypeScript & performance optimization at scale.",
+    skills: ["React", "TypeScript", "Next.js", "GraphQL"],
+  },
+  {
+    title: "Full Stack Engineer",
+    company: "Stripe",
+    level: "Mid-Level · L3",
+    badge: "Tech",
+    badgeColor: "blue",
+    description: "Design and ship robust API services and polished UIs for global payment infrastructure.",
+    skills: ["Node.js", "React", "PostgreSQL", "AWS"],
+  },
+  {
+    title: "Backend Software Engineer",
+    company: "Amazon",
+    level: "Senior · SDE-II",
+    badge: "Tech",
+    badgeColor: "blue",
+    description: "Architect distributed microservices handling millions of transactions per second.",
+    skills: ["Java", "AWS", "Microservices", "DynamoDB"],
+  },
+  {
+    title: "Machine Learning Engineer",
+    company: "OpenAI",
+    level: "Senior · L5",
+    badge: "AI / ML",
+    badgeColor: "purple",
+    description: "Train and fine-tune large language models for production-grade AI products.",
+    skills: ["Python", "PyTorch", "LLMs", "CUDA"],
+  },
+  {
+    title: "Data Scientist",
+    company: "Netflix",
+    level: "Mid-Level · L4",
+    badge: "AI / ML",
+    badgeColor: "purple",
+    description: "Drive personalisation algorithms that serve 260 M+ subscribers worldwide.",
+    skills: ["Python", "Spark", "SQL", "A/B Testing"],
+  },
+  {
+    title: "AI Research Scientist",
+    company: "DeepMind",
+    level: "Senior · Research",
+    badge: "AI / ML",
+    badgeColor: "purple",
+    description: "Publish cutting-edge research in reinforcement learning and multi-agent systems.",
+    skills: ["Python", "JAX", "RL", "Mathematics"],
+  },
+  {
+    title: "Product Manager",
+    company: "Meta",
+    level: "Senior · IC5",
+    badge: "Product",
+    badgeColor: "teal",
+    description: "Own the roadmap for a social platform feature used by 3 billion people.",
+    skills: ["Roadmapping", "SQL", "OKRs", "User Research"],
+  },
+  {
+    title: "Product Manager",
+    company: "Atlassian",
+    level: "Associate · IC3",
+    badge: "Product",
+    badgeColor: "teal",
+    description: "Collaborate with engineering and design to deliver Jira and Confluence features.",
+    skills: ["Agile", "JIRA", "Analytics", "Prototyping"],
+  },
+  {
+    title: "UX / UI Designer",
+    company: "Apple",
+    level: "Senior · ICT4",
+    badge: "Design",
+    badgeColor: "pink",
+    description: "Craft pixel-perfect experiences for iOS, macOS and visionOS platforms.",
+    skills: ["Figma", "SwiftUI", "Prototyping", "HIG"],
+  },
+  {
+    title: "Lead Product Designer",
+    company: "Figma",
+    level: "Lead · IC5",
+    badge: "Design",
+    badgeColor: "pink",
+    description: "Define the visual language and interaction patterns for the Figma design tool itself.",
+    skills: ["Figma", "Systems", "Motion", "User Testing"],
+  },
+  {
+    title: "DevOps / Platform Engineer",
+    company: "Cloudflare",
+    level: "Mid-Level · L3",
+    badge: "Infra",
+    badgeColor: "orange",
+    description: "Automate CI/CD pipelines and manage global edge infrastructure for millions of sites.",
+    skills: ["Kubernetes", "Terraform", "Go", "Prometheus"],
+  },
+  {
+    title: "Cloud Solutions Architect",
+    company: "Microsoft Azure",
+    level: "Senior · L62",
+    badge: "Infra",
+    badgeColor: "orange",
+    description: "Guide enterprise clients through cloud migrations and greenfield Azure deployments.",
+    skills: ["Azure", "ARM", "Networking", "Security"],
+  },
+  {
+    title: "Cybersecurity Analyst",
+    company: "IBM Security",
+    level: "Mid-Level · Band 7",
+    badge: "Security",
+    badgeColor: "red",
+    description: "Detect, contain and remediate threats across Fortune 500 client environments.",
+    skills: ["SIEM", "Splunk", "NIST", "Incident Response"],
+  },
+  {
+    title: "Mobile App Developer",
+    company: "Spotify",
+    level: "Mid-Level · L4",
+    badge: "Mobile",
+    badgeColor: "green",
+    description: "Build performant React Native and native features for 600 M+ Spotify users.",
+    skills: ["React Native", "Swift", "Kotlin", "GraphQL"],
+  },
+  {
+    title: "QA / Test Automation Engineer",
+    company: "Salesforce",
+    level: "Senior · MTS",
+    badge: "QA",
+    badgeColor: "indigo",
+    description: "Own end-to-end test strategy and Selenium/Cypress automation for Salesforce CRM.",
+    skills: ["Cypress", "Selenium", "JIRA", "CI/CD"],
+  },
+  {
+    title: "Business Analyst",
+    company: "McKinsey & Co.",
+    level: "Analyst · Entry",
+    badge: "Business",
+    badgeColor: "teal",
+    description: "Deliver data-driven insights and process improvement strategies for global clients.",
+    skills: ["Excel", "PowerBI", "SQL", "Stakeholder Mgmt"],
+  },
+  {
+    title: "Financial Analyst",
+    company: "Goldman Sachs",
+    level: "Associate · AN2",
+    badge: "Finance",
+    badgeColor: "yellow",
+    description: "Model valuations, build pitch books and support M&A transactions in IBD.",
+    skills: ["Excel", "DCF", "Bloomberg", "PowerPoint"],
+  },
+  {
+    title: "Marketing Manager",
+    company: "HubSpot",
+    level: "Senior · IC4",
+    badge: "Marketing",
+    badgeColor: "orange",
+    description: "Lead demand-gen campaigns across SEO, paid, and lifecycle channels.",
+    skills: ["HubSpot", "Google Ads", "SEO", "Analytics"],
+  },
+  {
+    title: "Project Manager (PMP)",
+    company: "Accenture",
+    level: "Senior · Level 8",
+    badge: "Management",
+    badgeColor: "indigo",
+    description: "Manage cross-functional delivery of digital transformation projects end-to-end.",
+    skills: ["PMP", "Agile", "Risk Mgmt", "Stakeholders"],
+  },
+  {
+    title: "Human Resources Manager",
+    company: "LinkedIn",
+    level: "Senior · L5",
+    badge: "HR",
+    badgeColor: "green",
+    description: "Partner with business leaders on talent acquisition, DEI, and performance management.",
+    skills: ["Workday", "HRBP", "Recruiting", "L&D"],
+  },
+]
 
 export default function AtsAnalysisPage() {
   const [stage, setStage] = useState<Stage>("upload")
@@ -24,12 +218,61 @@ export default function AtsAnalysisPage() {
   const [dragOver, setDragOver] = useState(false)
   const [progress, setProgress] = useState(0)
   const [jobRole, setJobRole] = useState("")
+  const [showJobDropdown, setShowJobDropdown] = useState(false)
+  const [filteredJobs, setFilteredJobs] = useState<JobExample[]>(JOB_EXAMPLES)
+  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 })
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const jobDropdownRef = useRef<HTMLDivElement>(null)
+  const jobInputRef = useRef<HTMLDivElement>(null)
 
   const handleFile = (f: File) => {
     if (!f) return
     setFile(f)
     setFileUrl(URL.createObjectURL(f))
+  }
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (jobDropdownRef.current && !jobDropdownRef.current.contains(e.target as Node)) {
+        setShowJobDropdown(false)
+      }
+    }
+    document.addEventListener("mousedown", handler)
+    return () => document.removeEventListener("mousedown", handler)
+  }, [])
+
+  const openDropdown = () => {
+    if (jobInputRef.current) {
+      const rect = jobInputRef.current.getBoundingClientRect()
+      setDropdownPos({
+        top: rect.bottom + window.scrollY + 6,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      })
+    }
+    setShowJobDropdown(true)
+  }
+
+  const handleJobRoleChange = (value: string) => {
+    setJobRole(value)
+    const q = value.toLowerCase()
+    setFilteredJobs(
+      q
+        ? JOB_EXAMPLES.filter(
+            (j) =>
+              j.title.toLowerCase().includes(q) ||
+              j.company.toLowerCase().includes(q) ||
+              j.badge.toLowerCase().includes(q)
+          )
+        : JOB_EXAMPLES
+    )
+    openDropdown()
+  }
+
+  const selectJobRole = (job: JobExample) => {
+    setJobRole(`${job.title} at ${job.company}`)
+    setShowJobDropdown(false)
   }
 
   const handleDrop = (e: React.DragEvent) => {
@@ -193,17 +436,102 @@ export default function AtsAnalysisPage() {
                 </div>
 
                 {/* Optional Job Role */}
-                <div>
+                <div ref={jobDropdownRef} className="relative">
                   <label className="block text-sm font-medium mb-2 text-muted-foreground">
                     Target Job Role <span className="text-xs opacity-60">(optional — improves accuracy)</span>
                   </label>
-                  <input
-                    type="text"
-                    value={jobRole}
-                    onChange={(e) => setJobRole(e.target.value)}
-                    placeholder="e.g. Senior Frontend Engineer at Google"
-                    className="w-full h-11 rounded-xl border border-border bg-card px-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-all"
-                  />
+                  <div ref={jobInputRef} className="relative">
+                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    <input
+                      type="text"
+                      value={jobRole}
+                      onChange={(e) => handleJobRoleChange(e.target.value)}
+                      onFocus={openDropdown}
+                      placeholder="e.g. Senior Frontend Engineer at Google"
+                      className="w-full h-11 rounded-xl border border-border bg-card pl-10 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-all"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => { showJobDropdown ? setShowJobDropdown(false) : openDropdown() }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showJobDropdown ? "rotate-180" : ""}`} />
+                    </button>
+                  </div>
+
+                  {/* Rich Job Dropdown — fixed so it never clips under footer */}
+                  {showJobDropdown && filteredJobs.length > 0 && (
+                    <div
+                      style={{
+                        position: "fixed",
+                        top: dropdownPos.top,
+                        left: dropdownPos.left,
+                        width: dropdownPos.width,
+                        zIndex: 9999,
+                      }}
+                      className="rounded-2xl border border-border bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden"
+                    >
+                      {/* Header bar */}
+                      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-zinc-50 dark:bg-zinc-800/60">
+                        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Popular Roles</span>
+                        <span className="text-xs text-muted-foreground">{filteredJobs.length} results</span>
+                      </div>
+
+                      <div className="max-h-[420px] overflow-y-auto divide-y divide-border">
+                        {filteredJobs.map((job) => (
+                          <button
+                            key={`${job.title}-${job.company}`}
+                            type="button"
+                            onMouseDown={(e) => { e.preventDefault(); selectJobRole(job) }}
+                            className="flex flex-col w-full px-4 py-3.5 text-left hover:bg-teal-500/5 dark:hover:bg-teal-500/10 transition-colors group"
+                          >
+                            {/* Row 1: title + badge + company */}
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-semibold text-sm text-foreground group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+                                {job.title}
+                              </span>
+                              <span className={`shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                                job.badgeColor === "blue"   ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300" :
+                                job.badgeColor === "purple" ? "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300" :
+                                job.badgeColor === "teal"   ? "bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300" :
+                                job.badgeColor === "pink"   ? "bg-pink-100 text-pink-700 dark:bg-pink-900/40 dark:text-pink-300" :
+                                job.badgeColor === "orange" ? "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300" :
+                                job.badgeColor === "red"    ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300" :
+                                job.badgeColor === "green"  ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300" :
+                                job.badgeColor === "indigo" ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300" :
+                                job.badgeColor === "yellow" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300" :
+                                "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+                              }`}>
+                                {job.badge}
+                              </span>
+                              <span className="text-xs text-muted-foreground ml-auto shrink-0">{job.level}</span>
+                            </div>
+
+                            {/* Row 2: company */}
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Briefcase className="w-3 h-3 text-muted-foreground/60 shrink-0" />
+                              <span className="text-xs text-muted-foreground font-medium">{job.company}</span>
+                            </div>
+
+                            {/* Row 3: description */}
+                            <p className="text-xs text-muted-foreground/80 leading-relaxed mb-2">{job.description}</p>
+
+                            {/* Row 4: skill chips */}
+                            <div className="flex flex-wrap gap-1">
+                              {job.skills.map((skill) => (
+                                <span
+                                  key={skill}
+                                  className="text-[10px] px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-medium"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Analyze Button */}
@@ -369,6 +697,22 @@ export default function AtsAnalysisPage() {
                   <ScoreBreakdown />
                 </div>
               </div>
+
+              {/* Before & After Comparison Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mb-20"
+              >
+                <div className="text-center mb-10">
+                  <h2 className="text-3xl font-bold mb-3">See the AI Enhancement</h2>
+                  <p className="text-muted-foreground">Compare your original resume with the AI-optimized version.</p>
+                </div>
+                <div className="glass-card rounded-[2.5rem] border border-border p-4 md:p-8 shadow-2xl bg-white/50 dark:bg-zinc-900/50 backdrop-blur-xl">
+                  <BeforeAfterSlider />
+                </div>
+              </motion.div>
             </motion.div>
           )}
 

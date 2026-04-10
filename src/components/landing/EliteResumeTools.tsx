@@ -19,9 +19,9 @@ export function EliteResumeTools() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="group col-span-1 md:col-span-2 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px] flex flex-col items-end"
+        className="group col-span-1 md:col-span-2 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px] flex flex-col items-end"
       >
-        <h3 className="text-xl md:text-2xl font-extrabold text-zinc-900 group-hover:text-white transition-colors duration-500 z-20 relative text-right">ATS Resume Analyzer</h3>
+        <h3 className="text-xl md:text-2xl font-extrabold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 z-20 relative text-right">ATS Resume Analyzer</h3>
         
         {/* Mockup UI */}
         <div className="absolute left-0 md:left-[-20px] bottom-[-20px] w-[320px] md:w-[420px] bg-white group-hover:bg-zinc-100 transition-colors duration-500 rounded-t-xl rounded-br-xl shadow-xl border border-blue-100 p-6 transform translate-x-3 md:translate-x-0 z-10">
@@ -66,9 +66,9 @@ export function EliteResumeTools() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ delay: 0.1 }}
-        className="group col-span-1 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
+        className="group col-span-1 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors duration-500 z-10 relative">Smart Resume Optimizer</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 z-10 relative">Smart Resume Optimizer</h3>
         
         <div className="mt-8 bg-white group-hover:bg-zinc-100 transition-colors duration-500 rounded-xl shadow-xl border border-blue-100 p-4 space-y-3">
            <div className="h-6 bg-blue-50 rounded-md w-full border border-blue-100 flex items-center px-2 gap-2">
@@ -89,9 +89,9 @@ export function EliteResumeTools() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ delay: 0.2 }}
-        className="group col-span-1 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
+        className="group col-span-1 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors duration-500 z-10 relative">Keyword Match Engine</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 z-10 relative">Keyword Match Engine</h3>
         
         <div className="mt-8 relative h-32">
            <div className="absolute left-0 top-0 w-full bg-white group-hover:bg-zinc-100 rounded-lg shadow-lg p-3 z-10">
@@ -114,9 +114,9 @@ export function EliteResumeTools() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className="group col-span-1 md:col-span-2 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
+        className="group col-span-1 md:col-span-2 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors duration-500 z-10 relative">AI Resume Rewriter</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 z-10 relative">AI Resume Rewriter</h3>
         
         <div className="absolute left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-10 bottom-[-10px] w-[90%] md:w-[380px] bg-white group-hover:bg-zinc-100 transition-colors duration-500 rounded-t-xl shadow-xl border border-zinc-100 p-5">
            <div className="space-y-4">
@@ -141,9 +141,9 @@ export function EliteResumeTools() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="group col-span-1 md:col-span-2 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
+        className="group col-span-1 md:col-span-2 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors duration-500 z-10 relative">ATS Score Booster</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 z-10 relative">ATS Score Booster</h3>
         
         <div className="absolute left-12 bottom-[-20px] w-full bg-white group-hover:bg-zinc-100 transition-colors duration-500 rounded-tl-xl shadow-xl border-t border-l border-zinc-100/50 p-6 flex flex-col items-center">
             <div className="w-full flex justify-between items-center mb-6">
@@ -170,9 +170,9 @@ export function EliteResumeTools() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className="group col-span-1 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
+        className="group col-span-1 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors duration-500 z-10 relative">Professional Summary Builder</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 z-10 relative">Professional Summary Builder</h3>
         
         <div className="mt-8 bg-white group-hover:bg-zinc-100 transition-colors duration-500 rounded-xl shadow-xl border border-zinc-100 p-5">
            <div className="border border-blue-100 bg-blue-50/50 rounded-lg p-3 space-y-2">
@@ -189,9 +189,9 @@ export function EliteResumeTools() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="group col-span-1 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px] flex flex-col"
+        className="group col-span-1 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px] flex flex-col"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors duration-500 mb-12">Skill gap analyzer</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 mb-12">Skill gap analyzer</h3>
         
         <div className="flex-1 flex flex-col gap-4 items-center justify-center -mt-6">
            <div className="bg-white rounded-full shadow-lg shadow-blue-500/5 px-4 py-2.5 flex items-center gap-2 border border-blue-50 w-max transform -translate-x-4">
@@ -214,9 +214,9 @@ export function EliteResumeTools() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.3 }}
-        className="group col-span-1 md:col-span-2 bg-blue-50 hover:bg-blue-600 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
+        className="group col-span-1 md:col-span-2 bg-blue-50/50 border-2 border-transparent hover:border-blue-500 transition-colors duration-500 rounded-3xl p-6 md:p-8 relative overflow-hidden min-h-[300px]"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors duration-500 z-10 relative">Resume Templates</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors duration-500 z-10 relative">Resume Templates</h3>
         
         {/* Templates Mockup Container */}
         <div className="absolute right-0 bottom-[-40px] w-full md:w-[380px] h-[220px]">
