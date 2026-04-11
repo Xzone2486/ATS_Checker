@@ -60,7 +60,7 @@ export function FAQSection() {
             Commonly Asked Questions
           </h2>
           <p className="text-zinc-400 text-lg">
-            Everything you need to know about ROZGAR 24/7 and how it works.
+            Everything you need to know about ROZGAR 24X7 and how it works.
           </p>
         </motion.div>
 

@@ -29,7 +29,7 @@ export function WithYouEveryStep() {
             of Your Job Search
           </h2>
           <p className="text-lg text-muted-foreground">
-            From first draft to final offer — ROZGAR 24/7 guides you through the entire process with smart tools, instant feedback, and unwavering support.
+            From first draft to final offer — ROZGAR 24X7 guides you through the entire process with smart tools, instant feedback, and unwavering support.
           </p>
         </motion.div>
 

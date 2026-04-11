@@ -57,7 +57,7 @@ export function SignInModal() {
                   <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
                     <Sparkles className="w-4 h-4" />
                   </div>
-                  <span className="font-bold text-lg tracking-tight">ROZGAR 24/7</span>
+                  <span className="font-bold text-lg tracking-tight">ROZGAR 24X7</span>
                 </div>
                 <button onClick={closeModal} className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors">
                   <X className="w-5 h-5" />

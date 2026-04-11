@@ -62,10 +62,10 @@ export function Header() {
 						{/* Logo */}
 						<Link to="/" className="flex items-center gap-2 group mr-10">
 							<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-teal-600 shadow-md group-hover:scale-105 transition-transform">
-								<span className="text-white font-bold text-base tracking-tight">RZ</span>
+								<span className="text-white font-bold text-base tracking-tight">RX</span>
 							</div>
 							<span className="font-semibold text-2xl tracking-tight hidden sm:block text-zinc-900 dark:text-zinc-50">
-								ROZGAR <span className="font-semibold text-teal-600">24/7</span>
+								ROZGAR <span className="font-semibold text-teal-600">24X7</span>
 							</span>
 						</Link>
 

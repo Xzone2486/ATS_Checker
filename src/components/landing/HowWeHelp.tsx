@@ -138,7 +138,7 @@ export function HowWeHelp() {
               Supercharge Your Job Search
             </div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3 text-zinc-900">
-              How ROZGAR 24/7{" "}
+              How ROZGAR 24X7{" "}
               <span className="bg-gradient-to-r from-blue-600 via-teal-600 to-cyan-500 bg-clip-text text-transparent">
                 Powers Your Success
               </span>

@@ -51,9 +51,9 @@ export function Navbar() {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-teal-600 shadow-md group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-sm tracking-tight">RZ</span>
+                <span className="text-white font-bold text-sm tracking-tight">RX</span>
               </div>
-              <span className="font-semibold text-lg tracking-tight hidden sm:block">ROZGAR <span className="text-teal-600">24/7</span></span>
+              <span className="font-semibold text-lg tracking-tight hidden sm:block">ROZGAR <span className="text-teal-600">24X7</span></span>
             </Link>
 
             {/* Desktop Nav */}

@@ -175,7 +175,7 @@ export function ScoreGauge({ score = 84 }: { score?: number }) {
         className="text-center text-muted-foreground mt-4 max-w-[240px] text-sm"
       >
         Your resume scores better than{" "}
-        <strong className="text-foreground">73%</strong> of applicants for this role.
+        <strong className="text-foreground">70%</strong> of applicants for this role.
       </motion.p>
     </div>
   )

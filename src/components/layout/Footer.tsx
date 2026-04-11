@@ -16,9 +16,9 @@ export function Footer() {
           <div className="space-y-4">
              <Link to="/" className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-teal-600 shadow-md">
-                <span className="text-white font-bold text-sm tracking-tight">RZ</span>
+                <span className="text-white font-bold text-sm tracking-tight">RX</span>
               </div>
-              <span className="font-semibold text-lg tracking-tight">ROZGAR <span className="text-teal-600 dark:text-teal-400">24/7</span></span>
+              <span className="font-semibold text-lg tracking-tight">ROZGAR <span className="text-teal-600 dark:text-teal-400">24X7</span></span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-xs leading-relaxed">
               Silicon Valley-tier AI SaaS to optimize your resume. Build, analyze, and land your dream job faster.
@@ -84,7 +84,7 @@ export function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between border-t border-border/50 pt-8 gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ROZGAR 24/7. All rights reserved.
+            © {new Date().getFullYear()} ROZGAR 24X7. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground">Privacy Policy</a>

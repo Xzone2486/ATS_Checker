@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import {
   Upload, FileText, Loader2, Download, Share2,
   CheckCircle2, Sparkles, X, FileUp, Zap, MessageCircle, Mail, ExternalLink,
-  ChevronDown, Briefcase
+  ChevronDown, Briefcase, ClipboardList, ChevronRight, AlertTriangle, UserCheck
 } from "lucide-react"
 
 type Stage = "upload" | "analyzing" | "results"
@@ -220,6 +220,8 @@ export default function AtsAnalysisPage() {
   const [jobRole, setJobRole] = useState("")
   const [showJobDropdown, setShowJobDropdown] = useState(false)
   const [filteredJobs, setFilteredJobs] = useState<JobExample[]>(JOB_EXAMPLES)
+  const [customJd, setCustomJd] = useState("")
+  const [showJdPanel, setShowJdPanel] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const jobDropdownRef = useRef<HTMLDivElement>(null)
   const jobInputRef = useRef<HTMLDivElement>(null)
@@ -304,10 +306,12 @@ export default function AtsAnalysisPage() {
     setFileUrl(null)
     setProgress(0)
     setJobRole("")
+    setCustomJd("")
+    setShowJdPanel(false)
   }
 
   const handleShare = (method: "whatsapp" | "email") => {
-    const message = `Check out my ATS analysis results! Target Role: ${jobRole || "Professional"}. Score: 94/100.`
+    const message = `Check out my ATS analysis results! Target Role: ${jobRole || "Professional"}. Score: 91/100.`
     if (method === "whatsapp") {
       window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank")
     } else {
@@ -519,6 +523,86 @@ export default function AtsAnalysisPage() {
                   )}
                 </div>
 
+                {/* Optional Custom JD Panel */}
+                <div className="rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300">
+                  {/* Toggle header */}
+                  <button
+                    type="button"
+                    onClick={() => setShowJdPanel((v) => !v)}
+                    className="flex w-full items-center gap-3 px-4 py-3.5 text-left hover:bg-muted/40 transition-colors group"
+                  >
+                    <div className={`flex items-center justify-center w-8 h-8 rounded-xl transition-colors ${
+                      customJd.trim()
+                        ? "bg-teal-500/15 text-teal-600 dark:text-teal-400"
+                        : "bg-muted text-muted-foreground group-hover:bg-teal-500/10 group-hover:text-teal-500"
+                    }`}>
+                      <ClipboardList className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground flex items-center gap-2">
+                        Custom Job Description
+                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">
+                          Optional
+                        </span>
+                        {customJd.trim() && (
+                          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
+                            ✓ Added
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">Paste a JD to get a more targeted ATS match score</p>
+                    </div>
+                    <ChevronRight className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                      showJdPanel ? "rotate-90" : ""
+                    }`} />
+                  </button>
+
+                  {/* Collapsible textarea body */}
+                  {showJdPanel && (
+                    <div className="px-4 pb-4 border-t border-border/60 bg-muted/20">
+                      <div className="pt-3 relative">
+                        <textarea
+                          value={customJd}
+                          onChange={(e) => setCustomJd(e.target.value)}
+                          rows={7}
+                          maxLength={5000}
+                          placeholder={`Paste the job description here...
+
+Example:
+  We are looking for a Senior Frontend Engineer to join our team. 
+  You will be responsible for building scalable React applications, 
+  collaborating with design & backend teams, and mentoring junior devs.
+
+  Requirements:
+  • 5+ years of experience with React / Next.js
+  • Strong TypeScript skills
+  • Experience with REST APIs and GraphQL`}
+                          className="w-full resize-none rounded-xl border border-border bg-card text-sm leading-relaxed p-3 focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-all placeholder:text-muted-foreground/40"
+                        />
+                        <div className="flex items-center justify-between mt-2">
+                          <p className="text-xs text-muted-foreground">
+                            The JD will be cross-referenced with your resume to improve ATS scoring accuracy.
+                          </p>
+                          <span className={`text-[11px] font-mono tabular-nums transition-colors ${
+                            customJd.length > 4500 ? "text-orange-500" : "text-muted-foreground/60"
+                          }`}>
+                            {customJd.length}/5000
+                          </span>
+                        </div>
+                        {customJd.trim() && (
+                          <button
+                            type="button"
+                            onClick={() => setCustomJd("")}
+                            className="mt-2 text-xs text-muted-foreground hover:text-red-500 transition-colors flex items-center gap-1"
+                          >
+                            <X className="w-3 h-3" /> Clear JD
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 {/* Analyze Button */}
                 <Button
                   variant="gradient"
@@ -611,25 +695,40 @@ export default function AtsAnalysisPage() {
           )}
 
           {/* ─── RESULTS STAGE ─── */}
-          {stage === "results" && (
+          {stage === "results" && (() => {
+            const ATS_SCORE = 91
+            const resumeName = file?.name ?? "resume.pdf"
+            const mentorEmail = "mentor@resumeboost.ai"
+            const mentorWhatsApp = "919999999999" // replace with real number
+            const mentorMailBody = `Hi,\n\nI'd like to connect regarding my resume review.\n\nResume: ${resumeName}\nATS Score: ${ATS_SCORE}/100${jobRole ? `\nTarget Role: ${jobRole}` : ""}\n\nPlease find my resume attached.\n\nThank you!`
+            const mentorWAMsg = `Hi! I would like to connect for a resume review.\n\nResume: ${resumeName}\nATS Score: ${ATS_SCORE}/100${jobRole ? `\nTarget Role: ${jobRole}` : ""}\n\nCould you please help me improve my resume?`
+
+            return (
             <motion.div
               key="results"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
             >
               {/* Page Header */}
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 pb-6 border-b border-border gap-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 pb-6 border-b border-border gap-4">
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight mb-1">ATS Analysis Results</h1>
                   <p className="text-muted-foreground flex items-center gap-2 text-sm">
                     <FileText className="w-4 h-4" />
-                    {file?.name ?? "resume.pdf"}
+                    {resumeName}
                     {jobRole && <> · <span className="text-teal-500">{jobRole}</span></>}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2 md:gap-3">
                   <Button variant="outline" size="sm" className="gap-2 hidden sm:flex" onClick={reset}>
                     <Upload className="w-4 h-4" /> New Scan
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    className="gap-2 bg-red-600 hover:bg-red-700 text-white border-none shadow-lg shadow-red-500/20" 
+                    onClick={() => document.getElementById('mentor-section')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    <Sparkles className="w-4 h-4" /> Enhance Resume
                   </Button>
                   <Button variant="outline" size="sm" className="gap-2 bg-green-500/10 hover:bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/20" onClick={() => handleShare("whatsapp")}>
                     <MessageCircle className="w-4 h-4" /> Share to WhatsApp
@@ -643,63 +742,175 @@ export default function AtsAnalysisPage() {
                 </div>
               </div>
 
-              {/* 3-Column Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16 items-start">
-                {/* Left: Original Resume view */}
-                <div className="glass-card rounded-3xl border border-border flex flex-col p-4 shadow-sm overflow-hidden lg:col-span-5 w-full">
-                  <h3 className="text-lg font-semibold mb-4 text-foreground/80 flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-teal-500" />
-                    Original Resume
-                  </h3>
-                  <div className="flex-1 w-full bg-muted/30 rounded-none overflow-hidden border border-border relative transition-all block min-h-[700px]">
-                    {fileUrl ? (
-                      <iframe src={`${fileUrl}#view=FitH&toolbar=0`} className="absolute inset-0 w-full h-full border-none bg-white" title="Resume PDF" />
-                    ) : (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground gap-2">
-                        <FileText className="w-8 h-8 opacity-40" />
-                        <span className="text-sm opacity-60">No preview available</span>
-                      </div>
-                    )}
+              {/* ── LOW SCORE ALERT ── */}
+              {ATS_SCORE < 75 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 rounded-2xl border border-red-500/40 bg-red-500/10 dark:bg-red-950/40 p-4 flex items-start gap-4"
+                >
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-red-500/15 shrink-0">
+                    <AlertTriangle className="w-5 h-5 text-red-500" />
                   </div>
-                </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-red-600 dark:text-red-400 mb-1">⚠ Low ATS Score — Your Resume May Be Auto-Rejected</p>
+                    <p className="text-sm text-red-600/80 dark:text-red-400/80 leading-relaxed">
+                      Your resume scored <strong>{ATS_SCORE}/100</strong>, which is below the 75-point threshold most ATS systems use. It may be filtered out before a recruiter ever reads it.
+                      Address the issues listed below and consider connecting with a mentor for personalized help.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
-                {/* Middle: ATS Score */}
-                <div className="glass-card rounded-3xl border border-border flex flex-col items-center justify-start p-6 shadow-sm relative overflow-hidden lg:col-span-3">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl" />
-                  <div className="mt-8">
-                    <ScoreGauge score={94} />
-                  </div>
-                  
-                  <div className="mt-12 text-center px-2 mb-4">
-                     <h4 className="text-xl font-bold mb-2">Almost There!</h4>
-                     <p className="text-sm text-muted-foreground leading-relaxed">Your resume has great potential but requires some formatting and keyword adjustments to pass ATS systems with a higher score.</p>
-                  </div>
-                </div>
+              {/* ── 2-COLUMN LAYOUT (matches reference image) ── */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 items-start">
 
-                {/* Right: Errors and Fixes */}
+                {/* LEFT: Score Gauge + Score Breakdown */}
                 <div className="flex flex-col gap-6 lg:col-span-4">
-                  <IssuesDetected />
+                  {/* Score card */}
+                  <div className="glass-card rounded-3xl border border-border flex flex-col items-center justify-start p-6 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl" />
+                    <div className="mt-8">
+                      <ScoreGauge score={ATS_SCORE} />
+                    </div>
+                    <div className="mt-10 text-center px-2 mb-4">
+                      <h4 className="text-xl font-bold mb-2">
+                        {ATS_SCORE >= 90 ? "Excellent!" : ATS_SCORE >= 75 ? "Almost There!" : "Needs Work"}
+                      </h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {ATS_SCORE >= 90
+                          ? "Your resume is highly optimised. Minor tweaks can push it to a perfect score."
+                          : ATS_SCORE >= 75
+                          ? "Great potential! Some formatting and keyword adjustments will push you over the line."
+                          : "Your resume needs significant improvements to pass most ATS filters. See the issues on the right."}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Score Breakdown */}
                   <ScoreBreakdown />
+                </div>
+
+                {/* RIGHT: Issues Detected + Original Resume PDF — unified card */}
+                <div className="glass-card rounded-3xl border border-border/80 shadow-[0_4px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.3)] overflow-hidden lg:col-span-8 flex flex-col">
+
+                  {/* ── Issues Detected sub-section ── */}
+                  <div className="p-4 pb-0">
+                    <IssuesDetected />
+                  </div>
+
+                  {/* Divider */}
+                  <div className="flex items-center gap-3 px-5 py-4 mt-2">
+                    <div className="flex-1 h-px bg-border" />
+                    <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground px-2 py-1 rounded-full bg-muted/60 border border-border">
+                      <FileText className="w-3 h-3" /> Original Resume
+                    </span>
+                    <div className="flex-1 h-px bg-border" />
+                  </div>
+
+                  {/* ── PDF Viewer sub-section ── */}
+                  <div className="px-4 pb-4 flex flex-col flex-1">
+                    <div className="flex-1 w-full bg-muted/30 overflow-hidden border border-border relative transition-all block min-h-[700px] rounded-xl">
+                      {fileUrl ? (
+                        <iframe src={`${fileUrl}#view=FitH&toolbar=0`} className="absolute inset-0 w-full h-full border-none bg-white" title="Resume PDF" />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground gap-2">
+                          <FileText className="w-8 h-8 opacity-40" />
+                          <span className="text-sm opacity-60">No preview available</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
-              {/* Before & After Comparison Section */}
+              {/* ── CONNECT WITH MENTOR ── */}
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
+                id="mentor-section"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-20"
+                className="mb-10 scroll-mt-20"
               >
-                <div className="text-center mb-10">
-                  <h2 className="text-3xl font-bold mb-3">See the AI Enhancement</h2>
-                  <p className="text-muted-foreground">Compare your original resume with the AI-optimized version.</p>
-                </div>
-                <div className="glass-card rounded-[2.5rem] border border-border p-4 md:p-8 shadow-2xl bg-white/50 dark:bg-zinc-900/50 backdrop-blur-xl">
-                  <BeforeAfterSlider />
+                <div className="glass-card rounded-3xl border border-border overflow-hidden shadow-sm">
+                  {/* Header gradient strip */}
+                  <div className="bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-500 px-6 py-4 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center">
+                      <UserCheck className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-white text-base">Connect with a Resume Mentor</p>
+                      <p className="text-white/70 text-xs">Get personalized 1-on-1 feedback from a certified career coach</p>
+                    </div>
+                    <div className="ml-auto hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 border border-white/20">
+                      <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                      <span className="text-white/90 text-xs font-medium">Mentors Online</span>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                      {/* Resume info pill */}
+                      <div className="col-span-full flex items-center gap-3 rounded-xl border border-border bg-muted/40 px-4 py-3">
+                        <FileText className="w-4 h-4 text-teal-500 shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-xs text-muted-foreground">Resume to share</p>
+                          <p className="text-sm font-medium text-foreground truncate">{resumeName}</p>
+                        </div>
+                        <span className={`ml-auto shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full ${
+                          ATS_SCORE >= 75 ? "bg-teal-500/10 text-teal-600 dark:text-teal-400" : "bg-red-500/10 text-red-600 dark:text-red-400"
+                        }`}>
+                          Score: {ATS_SCORE}/100
+                        </span>
+                      </div>
+
+                      {/* WhatsApp mentor button */}
+                      <button
+                        type="button"
+                        onClick={() => window.open(`https://wa.me/${mentorWhatsApp}?text=${encodeURIComponent(mentorWAMsg)}`, "_blank")}
+                        className="flex items-center gap-4 rounded-2xl border border-green-500/30 bg-green-500/5 hover:bg-green-500/12 dark:hover:bg-green-500/15 px-5 py-4 text-left transition-all group"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                          <MessageCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-foreground group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">Chat on WhatsApp</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">Send your resume details instantly</p>
+                        </div>
+                        <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/60 ml-auto shrink-0" />
+                      </button>
+
+                      {/* Email mentor button */}
+                      <button
+                        type="button"
+                        onClick={() => window.open(
+                          `mailto:${mentorEmail}?subject=${encodeURIComponent(`Resume Review Request — ${resumeName}`)}&body=${encodeURIComponent(mentorMailBody)}`,
+                          "_blank"
+                        )}
+                        className="flex items-center gap-4 rounded-2xl border border-blue-500/30 bg-blue-500/5 hover:bg-blue-500/12 dark:hover:bg-blue-500/15 px-5 py-4 text-left transition-all group"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                          <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Email a Mentor</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">Pre-filled with your resume & score</p>
+                        </div>
+                        <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/60 ml-auto shrink-0" />
+                      </button>
+                    </div>
+
+                    <p className="text-center text-xs text-muted-foreground">
+                      📎 Tip: After opening the compose window, <strong>attach your resume file</strong> to the message before sending.
+                    </p>
+                  </div>
                 </div>
               </motion.div>
+
             </motion.div>
-          )}
+            )
+          })()}
 
         </AnimatePresence>
       </div>

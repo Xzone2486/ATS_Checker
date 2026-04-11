@@ -120,7 +120,7 @@ export default function PricingPage() {
             Invest in your <span className="text-gradient">career.</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-xl text-muted-foreground/80">
-            Join 10,000+ professionals who landed their dream jobs using ROZGAR 24/7.
+            Join 10,000+ professionals who landed their dream jobs using ROZGAR 24X7.
           </motion.p>
           
           {/* Billing Toggle */}
@@ -245,7 +245,7 @@ export default function PricingPage() {
                         <Check className="w-8 h-8" />
                       </div>
                       <h4 className="text-2xl font-bold mb-2">Payment Successful!</h4>
-                      <p className="text-muted-foreground text-sm">Welcome to ROZGAR 24/7 {selectedPlan.name}. Your account has been upgraded.</p>
+                      <p className="text-muted-foreground text-sm">Welcome to ROZGAR 24X7 {selectedPlan.name}. Your account has been upgraded.</p>
                     </motion.div>
                   ) : (
                     <motion.form 
@@ -317,7 +317,7 @@ export default function PricingPage() {
                       </Button>
                       
                       <p className="text-center text-[10px] text-muted-foreground mt-4">
-                        By confirming your subscription, you allow ROZGAR 24/7 to charge you for future payments in accordance with their terms.
+                        By confirming your subscription, you allow ROZGAR 24X7 to charge you for future payments in accordance with their terms.
                       </p>
                     </motion.form>
                   )}

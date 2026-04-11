@@ -53,7 +53,7 @@ export function Sidebar() {
         <div className="flex items-center h-16 px-4 border-b border-border/50 justify-between shrink-0">
           <Link to="/" className="flex items-center gap-2 overflow-hidden flex-shrink-0">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-teal-600 shrink-0">
-              <span className="text-white font-bold text-sm tracking-tight">RZ</span>
+              <span className="text-white font-bold text-sm tracking-tight">RX</span>
             </div>
             {!collapsed && (
               <motion.span 
@@ -62,7 +62,7 @@ export function Sidebar() {
                 transition={{ delay: 0.1 }}
                 className="font-semibold text-lg tracking-tight whitespace-nowrap"
               >
-                ROZGAR 24/7
+                ROZGAR 24X7
               </motion.span>
             )}
           </Link>

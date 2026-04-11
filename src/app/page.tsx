@@ -57,7 +57,7 @@ export default function Home() {
             Ready to Land Your Dream Job?
           </h2>
           <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto">
-            Join 50,000+ professionals who have supercharged their career with ROZGAR 24/7.
+            Join 50,000+ professionals who have supercharged their career with ROZGAR 24X7.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
