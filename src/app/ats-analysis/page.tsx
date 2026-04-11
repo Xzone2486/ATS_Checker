@@ -311,7 +311,7 @@ export default function AtsAnalysisPage() {
   }
 
   const handleShare = (method: "whatsapp" | "email") => {
-    const message = `Check out my ATS analysis results! Target Role: ${jobRole || "Professional"}. Score: 91/100.`
+    const message = `Check out my ATS analysis results! Target Role: ${jobRole || "Professional"}. Score: 70/100.`
     if (method === "whatsapp") {
       window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank")
     } else {
@@ -696,7 +696,7 @@ Example:
 
           {/* ─── RESULTS STAGE ─── */}
           {stage === "results" && (() => {
-            const ATS_SCORE = 91
+            const ATS_SCORE = 70
             const resumeName = file?.name ?? "resume.pdf"
             const mentorEmail = "mentor@resumeboost.ai"
             const mentorWhatsApp = "919999999999" // replace with real number

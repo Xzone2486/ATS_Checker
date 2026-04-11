@@ -82,6 +82,11 @@ function ScrollRow({ items, direction }: { items: typeof testimonials; direction
   const animFrameRef = useRef<number>(0)
   const posRef = useRef(0)
   const pausedRef = useRef(false)
+  const isDraggingRef = useRef(false)
+  const dragStartXRef = useRef(0)
+  const dragStartPosRef = useRef(0)
+  const velocityRef = useRef(0)
+  const lastMouseXRef = useRef(0)
   const speed = direction === "left" ? 0.25 : 0.2
   const allItems = [...items, ...items, ...items]
 
@@ -90,15 +95,20 @@ function ScrollRow({ items, direction }: { items: typeof testimonials; direction
     if (!track) return
 
     const animate = () => {
-      if (!pausedRef.current) {
-        posRef.current += speed
-        const totalWidth = track.scrollWidth / 3
+      const totalWidth = track.scrollWidth / 3
+
+      if (!isDraggingRef.current) {
+        if (!pausedRef.current) {
+          posRef.current += speed
+        }
         if (posRef.current >= totalWidth) posRef.current -= totalWidth
+        if (posRef.current < 0) posRef.current += totalWidth
       }
+
       if (direction === "left") {
         track.style.transform = `translateX(-${posRef.current}px)`
       } else {
-        track.style.transform = `translateX(${posRef.current - track.scrollWidth / 3}px)`
+        track.style.transform = `translateX(${posRef.current - totalWidth}px)`
       }
       animFrameRef.current = requestAnimationFrame(animate)
     }
@@ -107,14 +117,60 @@ function ScrollRow({ items, direction }: { items: typeof testimonials; direction
     return () => cancelAnimationFrame(animFrameRef.current)
   }, [direction, speed])
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDraggingRef.current = true
+    pausedRef.current = true
+    dragStartXRef.current = e.clientX
+    dragStartPosRef.current = posRef.current
+    lastMouseXRef.current = e.clientX
+    velocityRef.current = 0
+    if (trackRef.current) trackRef.current.style.cursor = "grabbing"
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current) return
+    // For "right" direction the transform is negative, so flip the delta
+    const raw = dragStartXRef.current - e.clientX
+    const delta = direction === "right" ? -raw : raw
+    velocityRef.current = lastMouseXRef.current - e.clientX
+    lastMouseXRef.current = e.clientX
+    const track = trackRef.current
+    if (!track) return
+    const totalWidth = track.scrollWidth / 3
+    let newPos = dragStartPosRef.current + delta
+    // Wrap-around clamping
+    while (newPos >= totalWidth) newPos -= totalWidth
+    while (newPos < 0) newPos += totalWidth
+    posRef.current = newPos
+  }
+
+  const handleMouseUp = () => {
+    isDraggingRef.current = false
+    pausedRef.current = false
+    if (trackRef.current) trackRef.current.style.cursor = "grab"
+  }
+
+  const handleMouseLeave = () => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false
+      pausedRef.current = false
+    } else {
+      pausedRef.current = false
+    }
+    if (trackRef.current) trackRef.current.style.cursor = "grab"
+  }
+
   return (
-    <div className="w-full overflow-hidden relative">
+    <div className="w-full overflow-hidden relative select-none">
       <div
         ref={trackRef}
         className="flex gap-6 py-3"
-        style={{ width: "max-content" }}
-        onMouseEnter={() => { pausedRef.current = true }}
-        onMouseLeave={() => { pausedRef.current = false }}
+        style={{ width: "max-content", cursor: "grab", userSelect: "none" }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseEnter={() => { if (!isDraggingRef.current) pausedRef.current = true }}
+        onMouseLeave={handleMouseLeave}
       >
         {allItems.map((t, i) => (
           <TestimonialCard key={i} t={t} index={i} />
@@ -123,6 +179,7 @@ function ScrollRow({ items, direction }: { items: typeof testimonials; direction
     </div>
   )
 }
+
 
 export function Testimonials() {
   return (
