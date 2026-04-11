@@ -74,10 +74,10 @@ export function FeaturesInteractive() {
   const activeFeature = FEATURES.find(f => f.id === activeTab) || FEATURES[0]
 
   return (
-    <div className="max-w-6xl mx-auto bg-white dark:bg-zinc-950 rounded-[2.5rem] border border-border shadow-2xl overflow-hidden flex flex-col lg:flex-row min-h-[600px]">
+    <div className="w-full lg:max-w-7xl xl:max-w-[1400px] mx-auto bg-white dark:bg-zinc-950 rounded-[2.5rem] border border-border shadow-2xl overflow-hidden flex flex-col lg:flex-row min-h-[600px]">
       
       {/* LEFT COLUMN: Tabs */}
-      <div className="w-full lg:w-[40%] bg-zinc-50 dark:bg-zinc-900/50 border-r border-border p-6 md:p-10 flex flex-col">
+      <div className="w-full lg:w-[45%] bg-zinc-50 dark:bg-zinc-900/50 border-r border-border p-6 md:p-10 flex flex-col">
         <h3 className="text-2xl font-bold mb-8 text-foreground">How the ATS Checker Works</h3>
         
         <div className="flex flex-col gap-2 flex-1">
@@ -85,7 +85,7 @@ export function FeaturesInteractive() {
             const isActive = activeTab === feature.id
             const Icon = feature.icon
             return (
-              <button
+               <button
                 key={feature.id}
                 onClick={() => setActiveTab(feature.id)}
                 className={`flex flex-col text-left px-5 py-4 rounded-2xl transition-all duration-300 relative ${
@@ -139,7 +139,7 @@ export function FeaturesInteractive() {
       </div>
 
       {/* RIGHT COLUMN: Interactive Mockup Display */}
-      <div className="w-full lg:w-[60%] bg-gradient-to-br from-blue-50 to-teal-50 dark:from-blue-950/20 dark:to-teal-950/20 p-6 md:p-12 flex items-center justify-center relative overflow-hidden">
+      <div className="w-full lg:w-[55%] bg-gradient-to-br from-blue-50 to-teal-50 dark:from-blue-950/20 dark:to-teal-950/20 p-6 md:p-12 flex items-center justify-center relative overflow-hidden">
         
         {/* Background decorations */}
         <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-teal-500/10 blur-[100px] rounded-full" />

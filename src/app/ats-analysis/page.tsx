@@ -222,6 +222,7 @@ export default function AtsAnalysisPage() {
   const [filteredJobs, setFilteredJobs] = useState<JobExample[]>(JOB_EXAMPLES)
   const [customJd, setCustomJd] = useState("")
   const [showJdPanel, setShowJdPanel] = useState(false)
+  const [showMentorPopup, setShowMentorPopup] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const jobDropdownRef = useRef<HTMLDivElement>(null)
   const jobInputRef = useRef<HTMLDivElement>(null)
@@ -297,7 +298,11 @@ export default function AtsAnalysisPage() {
     steps.forEach(({ pct, delay }) => {
       setTimeout(() => setProgress(pct), delay)
     })
-    setTimeout(() => setStage("results"), 4000)
+    setTimeout(() => {
+      setStage("results")
+      // Simulated score is 70, so we show the low score popup
+      setShowMentorPopup(true)
+    }, 4000)
   }
 
   const reset = () => {
@@ -308,6 +313,7 @@ export default function AtsAnalysisPage() {
     setJobRole("")
     setCustomJd("")
     setShowJdPanel(false)
+    setShowMentorPopup(false)
   }
 
   const handleShare = (method: "whatsapp" | "email") => {
@@ -914,6 +920,63 @@ Example:
 
         </AnimatePresence>
       </div>
+
+      {/* ── LOW SCORE POPUP ── */}
+      <AnimatePresence>
+        {stage === "results" && showMentorPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="relative w-full max-w-md bg-zinc-900/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden glass-card"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/20 rounded-full blur-3xl pointer-events-none" />
+              
+              <button 
+                onClick={() => setShowMentorPopup(false)}
+                className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex flex-col items-center text-center mt-2">
+                <div className="w-16 h-16 rounded-2xl bg-red-400/20 border border-red-400/30 shadow-[0_0_20px_rgba(248,113,113,0.15)] flex items-center justify-center mb-4">
+                  <AlertTriangle className="w-8 h-8 text-red-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Low ATS Score Detected</h3>
+                <p className="text-sm text-white/80 mb-6 leading-relaxed">
+                  Your resume scored below the 75-point threshold and may be auto-rejected. Don't worry, our mentors can review and optimize it for you!
+                </p>
+
+                <Button 
+                  className="w-full gap-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 border-none shadow-lg shadow-red-500/25 text-white h-12 rounded-xl text-base font-medium"
+                  onClick={() => {
+                    setShowMentorPopup(false);
+                    document.getElementById('mentor-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <UserCheck className="w-5 h-5" />
+                  Connect with Mentor
+                </Button>
+                
+                <button
+                  className="mt-4 text-sm text-white/60 hover:text-white transition-colors"
+                  onClick={() => setShowMentorPopup(false)}
+                >
+                  Review exactly what went wrong
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </main>
