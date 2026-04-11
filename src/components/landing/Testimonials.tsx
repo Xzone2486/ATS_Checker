@@ -55,12 +55,7 @@ function TestimonialCard({ t, index }: { t: typeof testimonials[0]; index: numbe
         </div>
       )}
 
-      {/* Highlight badge */}
-      {t.pinned && (
-        <div className="inline-flex items-center px-3 py-1 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-xs font-semibold mb-5">
-          📌 Pinned Review
-        </div>
-      )}
+
 
       {/* Person */}
       <div className="flex items-center gap-3 mt-auto pt-4 border-t border-zinc-100 dark:border-zinc-800">
