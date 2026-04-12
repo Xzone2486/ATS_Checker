@@ -6,6 +6,7 @@ import { ImproveCharts } from '@/components/improve/ImproveCharts';
 import { SubmissionTable } from '@/components/improve/SubmissionTable';
 import { exportToCSV } from '@/utils/improveHelpers';
 import { Users, Clock, CheckCircle2, XCircle, Activity, Sparkles, LogOut, Download } from 'lucide-react';
+import companyLogo from '@/components/improve/company logo.png';
 
 export default function CompanyDashboard() {
   const { companySlug } = useParams<{ companySlug: string }>();
@@ -110,12 +111,7 @@ export default function CompanyDashboard() {
       {/* Sidebar/Nav */}
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <span className="text-xl font-bold tracking-tight">Rozgar24x7<span className="text-teal-600">Company</span></span>
-          <div className="hidden sm:flex ml-8 gap-1 p-1 bg-zinc-100 rounded-lg">
-             <div className="px-4 py-1.5 text-sm font-medium rounded-md bg-white text-zinc-900 shadow-sm border border-zinc-200">
-               {company.name} Dashboard
-             </div>
-          </div>
+          <img src={companyLogo} alt="Inttrvu Logo" className="h-8 object-contain" />
         </div>
         
         <div className="flex items-center gap-4">

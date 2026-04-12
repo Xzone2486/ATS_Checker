@@ -3,9 +3,9 @@ import { useImprove, Company, Submission } from '@/hooks/useImprove';
 import { StatsCard } from '@/components/improve/StatsCard';
 import { ImproveCharts } from '@/components/improve/ImproveCharts';
 import { SubmissionTable } from '@/components/improve/SubmissionTable';
-import { CompanyManager } from '@/components/improve/CompanyManager';
 import { exportToCSV } from '@/utils/improveHelpers';
-import { Users, Clock, CheckCircle2, XCircle, Activity, Sparkles, LogOut, Download, Building } from 'lucide-react';
+import { Users, Clock, CheckCircle2, XCircle, Activity, Sparkles, LogOut, Download, Building, Plus, Copy, Power, ExternalLink } from 'lucide-react';
+import companyLogo from '@/components/improve/company logo.png';
 
 export default function AdminDashboard() {
   const { getAllCompanies, getAllSubmissions, updateSubmissionStatus } = useImprove();
@@ -169,7 +169,6 @@ export default function AdminDashboard() {
                   fetchData();
                 }}
                 onRunAts={async (id) => {
-                  // Simulate ATS running perfectly
                   await updateSubmissionStatus(id, { atsScore: Math.floor(Math.random() * 60) + 40 });
                   fetchData();
                 }}
@@ -181,11 +180,125 @@ export default function AdminDashboard() {
             </section>
           </>
         ) : (
-          <section className="bg-white/50 p-6 rounded-2xl border border-zinc-200 backdrop-blur-xl">
-            <CompanyManager companies={companies} />
-          </section>
+          <CompaniesPanel />
         )}
       </main>
+
+      <footer className="w-full pb-8 text-center text-sm text-zinc-500">
+        Powered by Rozgar24x7
+      </footer>
     </div>
+  );
+}
+
+// ── Hardcoded Companies Panel ────────────────────────────────────────────────
+function CompaniesPanel() {
+  const UPLOAD_LINK = 'http://localhost:5173/improve/inttrvu';
+  const [showAdd, setShowAdd] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(UPLOAD_LINK);
+  };
+
+  return (
+    <section className="bg-white/50 p-6 rounded-2xl border border-zinc-200 backdrop-blur-xl space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h3 className="text-xl font-bold">Registered Companies</h3>
+        <button
+          onClick={() => setShowAdd(!showAdd)}
+          className="flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-sm font-medium transition-colors shadow-lg shadow-teal-500/20"
+        >
+          <Plus className="w-4 h-4" /> Add New Company
+        </button>
+      </div>
+
+      {/* Add Company Form */}
+      {showAdd && (
+        <div className="p-6 bg-white border border-zinc-200 rounded-2xl space-y-4">
+          <h4 className="text-base font-semibold">Add Company</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-1">Company Name</label>
+              <input
+                type="text"
+                value={newName}
+                onChange={e => setNewName(e.target.value)}
+                placeholder="Ex. Google"
+                className="w-full px-4 py-2 bg-white border border-zinc-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+              />
+              {newName && (
+                <p className="mt-2 text-xs text-zinc-500">
+                  Preview URL: <span className="font-mono text-teal-500">/improve/{newName.toLowerCase().replace(/\s+/g, '-')}</span>
+                </p>
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-1">Contact Email</label>
+              <input
+                type="email"
+                value={newEmail}
+                onChange={e => setNewEmail(e.target.value)}
+                placeholder="hr@company.com"
+                className="w-full px-4 py-2 bg-white border border-zinc-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-2 mt-2">
+            <button onClick={() => setShowAdd(false)} className="px-4 py-2 text-zinc-600 hover:bg-zinc-100 rounded-lg text-sm transition-colors">Cancel</button>
+            <button onClick={() => setShowAdd(false)} className="px-4 py-2 bg-zinc-900 text-white rounded-lg text-sm hover:opacity-90 transition-opacity">Save Company</button>
+          </div>
+        </div>
+      )}
+
+      {/* Companies Table */}
+      <div className="overflow-x-auto rounded-xl border border-zinc-200 bg-white/50">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-zinc-50 border-b border-zinc-200 text-xs text-zinc-500 uppercase">
+            <tr>
+              <th className="px-6 py-4">Company</th>
+              <th className="px-6 py-4">Slug</th>
+              <th className="px-6 py-4">Upload Link</th>
+              <th className="px-6 py-4">Status</th>
+              <th className="px-6 py-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-b border-zinc-100">
+              <td className="px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <img src={companyLogo} alt="Inttrvu" className="h-7 object-contain" />
+                </div>
+              </td>
+              <td className="px-6 py-4 font-mono text-xs text-zinc-500">inttrvu</td>
+              <td className="px-6 py-4">
+                <a href={UPLOAD_LINK} target="_blank" rel="noreferrer"
+                  className="text-teal-600 hover:underline text-xs font-mono truncate max-w-[200px] block">
+                  {UPLOAD_LINK}
+                </a>
+              </td>
+              <td className="px-6 py-4">
+                <span className="inline-flex px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">Active</span>
+              </td>
+              <td className="px-6 py-4 text-right">
+                <div className="flex justify-end gap-2 text-zinc-500">
+                  <button onClick={handleCopy} title="Copy Upload Link" className="p-1.5 hover:bg-zinc-100 hover:text-zinc-900 rounded-md">
+                    <Copy className="w-4 h-4" />
+                  </button>
+                  <a href={UPLOAD_LINK} target="_blank" rel="noreferrer" title="Open Upload Page" className="p-1.5 hover:bg-zinc-100 hover:text-zinc-900 rounded-md">
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <button title="Active" className="p-1.5 hover:bg-zinc-100 hover:text-amber-500 rounded-md">
+                    <Power className="w-4 h-4" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }

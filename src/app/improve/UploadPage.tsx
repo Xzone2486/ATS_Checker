@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useImprove, Company } from '@/hooks/useImprove';
 import { ResumeUploadForm } from '@/components/improve/ResumeUploadForm';
 import { DosDonts } from '@/components/improve/DosDonts';
+import companyLogo from '@/components/improve/company logo.png';
 
 export default function UploadPage() {
   const { companySlug } = useParams<{ companySlug: string }>();
@@ -69,14 +70,7 @@ export default function UploadPage() {
         {/* Header matching ATS checker light mode */}
         <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4 max-w-7xl mx-auto w-full">
-            <span className="text-xl font-bold tracking-tight">Rozgar24x7<span className="text-teal-600">Improve</span></span>
-            {company && (
-              <div className="hidden sm:flex ml-8 gap-1 p-1 bg-zinc-100 rounded-lg">
-                <div className="px-4 py-1.5 text-sm font-medium rounded-md bg-white text-zinc-900 shadow-sm">
-                  {company.name} Portal
-                </div>
-              </div>
-            )}
+            <img src={companyLogo} alt="Inttrvu Logo" className="h-8 object-contain" />
           </div>
         </header>
 

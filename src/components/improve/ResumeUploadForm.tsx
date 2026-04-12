@@ -90,7 +90,7 @@ export function ResumeUploadForm({ companyName, onSubmit }: ResumeUploadFormProp
  </motion.div>
  <h2 className="text-3xl font-bold text-zinc-900 mb-4">Resume Submitted Successfully!</h2>
  <p className="text-zinc-600 text-lg">
- Our team at {companyName} will review your application and get back to you soon.
+ Our team at Inttrvu will review your application and get back to you soon.
  </p>
  </motion.div>
  );

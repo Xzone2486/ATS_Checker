@@ -2,11 +2,36 @@ import { useState, useEffect } from 'react';
 import { mockCompanies, mockSubmissions } from '@/lib/mockImproveData';
 
 // Types
-export type Company = typeof mockCompanies[0];
-export type Submission = typeof mockSubmissions[0];
+export interface Company {
+  id: string;
+  name: string;
+  slug: string;
+  email: string;
+  createdAt: string;
+  isActive: boolean;
+}
+
+export interface Submission {
+  id: string;
+  companyId: string;
+  companyName: string;
+  companySlug: string;
+  candidateName: string;
+  email: string;
+  phone: string;
+  resumeUrl: string;
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  submittedAt: string;
+  status: string;
+  atsScore: number | null;
+  isImproved: boolean;
+  flaggedAs: string | null;
+}
 
 // In-memory state for the session to simulate DB mutability
-let currentSubmissions = [...mockSubmissions];
+let currentSubmissions: Submission[] = [...mockSubmissions];
 
 export function useImprove() {
   const [loading, setLoading] = useState(false);
@@ -105,7 +130,7 @@ export function useImprove() {
     return new Promise((resolve) => {
       setTimeout(() => {
         currentSubmissions = currentSubmissions.map(sub => 
-          sub.id === id ? { ...sub, ...updates } : sub
+          sub.id === id ? ({ ...sub, ...updates } as Submission) : sub
         );
         setLoading(false);
         resolve(true);
