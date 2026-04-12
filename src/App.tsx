@@ -16,6 +16,10 @@ import DashboardPage from '@/app/dashboard/page';
 // Profile content
 import ProfilePage from '@/app/profile/page';
 
+// Improve feature
+import UploadPage from '@/app/improve/UploadPage';
+import CompanyDashboard from '@/app/improve/CompanyDashboard';
+import AdminDashboard from '@/app/improve/AdminDashboard';
 function DashboardLayoutWrapper() {
   return (
     <DashboardLayout>
@@ -37,6 +41,11 @@ export default function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
+
+          {/* Improve Feature Routes */}
+          <Route path="/improve/admin" element={<AdminDashboard />} />
+          <Route path="/improve/:companySlug/dashboard" element={<CompanyDashboard />} />
+          <Route path="/improve/:companySlug" element={<UploadPage />} />
         </Routes>
       </Router>
       <Toaster
