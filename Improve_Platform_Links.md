@@ -15,20 +15,24 @@ Use this file to quickly navigate to the different modules of the hidden "Improv
 ---
 
 ## 🏢 Company HR Dashboard
-**Local:** [http://localhost:5173/improve/inttrvu/dashboard](http://localhost:5173/improve/inttrvu/dashboard)  
-**Live:** [https://ats-checker-tau.vercel.app/improve/inttrvu/dashboard](https://ats-checker-tau.vercel.app/improve/inttrvu/dashboard)
+**Local:** [http://localhost:5173/improve/dashboard](http://localhost:5173/improve/dashboard)  
+**Live:** [https://ats-checker-tau.vercel.app/improve/dashboard](https://ats-checker-tau.vercel.app/improve/dashboard)
 
 - **Purpose:** Recruitment portal for specific companies to manage their own talent pipeline.
-- **Login Credentials:**
-  - **Password:** `password123`
+- **Login Credentials (Email + Password):**
+  - Inttrvu → `hr@inttrvu.com` / `password123`
+  - TCS → `hr@tcs.com` / `password123`
+  - *(Add new companies via Admin Dashboard — credentials are stored in mockImproveData.ts)*
 
 ---
 
-## 📤 Candidate Upload Page (Public)
-**Local:** [http://localhost:5173/improve/inttrvu](http://localhost:5173/improve/inttrvu)
-**Live:** [https://ats-checker-tau.vercel.app/improve/inttrvu](https://ats-checker-tau.vercel.app/improve/inttrvu)
+## 📤 Candidate Upload Page (Public, Slug-Based)
+**Local Example:** [http://localhost:5173/improve/inttrvu](http://localhost:5173/improve/inttrvu)  
+**Live Example:** [https://ats-checker-tau.vercel.app/improve/inttrvu](https://ats-checker-tau.vercel.app/improve/inttrvu)
 
-- **Purpose:** Entry point for job seekers to submit their resumes.
+- **Purpose:** Unique per-company URL for candidates to submit resumes. No code required — just share the link!
+- **URL Format:** `/improve/:companySlug` (e.g. `/improve/tcs`, `/improve/google`)
+- Invalid or inactive slugs show a clean 404-style error page.
 
 ---
 
@@ -36,4 +40,4 @@ Use this file to quickly navigate to the different modules of the hidden "Improv
 > **To see these links live:** 
 > 1. You must **Git Push** current changes to your connected repository.
 > 2. Wait for the Vercel Build to complete.
-> 3. I have updated `vercel.json` to fix "404 on Refresh" errors, so ensure that file is included in your push!
+> 3. Ensure `vercel.json` is included in your push to prevent 404 on refresh errors!

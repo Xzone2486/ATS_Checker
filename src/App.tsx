@@ -20,6 +20,8 @@ import ProfilePage from '@/app/profile/page';
 import UploadPage from '@/app/improve/UploadPage';
 import CompanyDashboard from '@/app/improve/CompanyDashboard';
 import AdminDashboard from '@/app/improve/AdminDashboard';
+import { CompanyAuthProvider } from '@/hooks/useCompanyAuth';
+
 function DashboardLayoutWrapper() {
   return (
     <DashboardLayout>
@@ -44,7 +46,7 @@ export default function App() {
 
           {/* Improve Feature Routes */}
           <Route path="/improve/admin" element={<AdminDashboard />} />
-          <Route path="/improve/:companySlug/dashboard" element={<CompanyDashboard />} />
+          <Route path="/improve/dashboard" element={<CompanyAuthProvider><CompanyDashboard /></CompanyAuthProvider>} />
           <Route path="/improve/:companySlug" element={<UploadPage />} />
         </Routes>
       </Router>

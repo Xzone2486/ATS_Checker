@@ -1,28 +1,31 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useImprove, Company } from '@/hooks/useImprove';
+import { useParams, Link } from 'react-router-dom';
 import { ResumeUploadForm } from '@/components/improve/ResumeUploadForm';
 import { DosDonts } from '@/components/improve/DosDonts';
-import companyLogo from '@/components/improve/company logo.png';
+import { Building2, AlertCircle } from 'lucide-react';
+import { useImprove, Company } from '@/hooks/useImprove';
+import { getCompanyLogo } from '@/lib/companyLogos';
 
 export default function UploadPage() {
   const { companySlug } = useParams<{ companySlug: string }>();
-  const { getCompanyBySlug, submitResume, loading: dbLoading } = useImprove();
+  const { getCompanyBySlug } = useImprove();
   const [company, setCompany] = useState<Company | null>(null);
-  const [initialLoading, setInitialLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (companySlug) {
-      getCompanyBySlug(companySlug).then(res => {
-        setCompany(res);
-        setInitialLoading(false);
-      });
-    } else {
-      setInitialLoading(false);
+    async function loadCompany() {
+      if (!companySlug) {
+        setLoading(false);
+        return;
+      }
+      const data = await getCompanyBySlug(companySlug);
+      setCompany(data);
+      setLoading(false);
     }
+    loadCompany();
   }, [companySlug]);
 
-  if (initialLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-zinc-50">
         <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
@@ -30,13 +33,19 @@ export default function UploadPage() {
     );
   }
 
-  if (!company || !company.isActive) {
+  if (!company) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 text-center p-6">
-        <h1 className="text-6xl font-bold text-zinc-800 mb-4">404</h1>
-        <p className="text-xl text-zinc-600 max-w-md">
-          This upload link is inactive or does not exist. Please contact the company HR for a valid link.
-        </p>
+      <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center p-6 pb-20 selection:bg-teal-500/30">
+        <div className="w-full max-w-md p-8 md:p-10 rounded-3xl bg-white border border-zinc-200 shadow-2xl text-center">
+            <div className="w-16 h-16 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-6">
+                <AlertCircle className="w-8 h-8" />
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 mb-2">Link not found or inactive</h1>
+            <p className="text-zinc-500 mb-8 leading-relaxed">We couldn't find an active submission portal for this URL. Please check the link and try again.</p>
+            <Link to="/" className="inline-flex items-center justify-center px-6 py-3 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-medium transition-colors">
+                Return to Homepage
+            </Link>
+        </div>
       </div>
     );
   }
@@ -67,40 +76,44 @@ export default function UploadPage() {
       </div>
 
       <div className="relative z-10">
-        {/* Header matching ATS checker light mode */}
+        {/* Header */}
         <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-4 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4 w-full">
-            <img src={companyLogo} alt="Inttrvu Logo" className="h-8 object-contain" />
+            {getCompanyLogo(company.slug) ? (
+              <img
+                src={getCompanyLogo(company.slug)!}
+                alt={company.name}
+                className="h-8 max-w-[140px] object-contain"
+              />
+            ) : (
+              <span className="font-bold text-xl text-teal-800 flex items-center gap-2">
+                <Building2 className="w-5 h-5" /> {company.name}
+              </span>
+            )}
           </div>
         </header>
 
         {/* Hero Section */}
         <main className="px-6 pt-32 pb-12 max-w-7xl mx-auto">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight mb-6">
-              Submit Your Resume
+          <div className="text-center mb-14 max-w-3xl mx-auto flex flex-col items-center">
+            {getCompanyLogo(company.slug) && (
+                <img 
+                  src={getCompanyLogo(company.slug)!} 
+                  alt={`${company.name} logo`} 
+                  className="max-h-[56px] object-contain mb-3"
+                />
+            )}
+            <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight mb-4">
+              Submit Your Resume to {company.name}
             </h1>
+            <p className="text-xl text-zinc-600 max-w-md mx-auto">
+              One upload. Unlimited opportunities. Get noticed faster.
+            </p>
           </div>
 
           <DosDonts />
 
-          <ResumeUploadForm 
-            companyName={company.name} 
-            onSubmit={async (data) => {
-              return await submitResume({
-                companyId: company.id,
-                companyName: company.name,
-                companySlug: company.slug,
-                candidateName: data.name,
-                email: data.email,
-                phone: data.phone,
-                resumeUrl: URL.createObjectURL(data.file),
-                fileName: data.file.name,
-                fileType: data.file.type,
-                fileSize: data.file.size
-              });
-            }} 
-          />
+          <ResumeUploadForm company={company} />
         </main>
 
         {/* Footer */}

@@ -8,7 +8,7 @@ import { Users, Clock, CheckCircle2, XCircle, Activity, Sparkles, LogOut, Downlo
 import companyLogo from '@/components/improve/company logo.png';
 
 export default function AdminDashboard() {
-  const { getAllCompanies, getAllSubmissions, updateSubmissionStatus } = useImprove();
+  const { getAllCompanies, getAllSubmissions, updateSubmissionStatus, createCompany } = useImprove();
 
   const [companies, setCompanies] = useState<Company[]>([]);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -180,7 +180,11 @@ export default function AdminDashboard() {
             </section>
           </>
         ) : (
-          <CompaniesPanel />
+          <CompaniesPanel 
+            companies={companies} 
+            createCompany={createCompany}
+            onRefresh={fetchData}
+          />
         )}
       </main>
 
@@ -191,15 +195,49 @@ export default function AdminDashboard() {
   );
 }
 
-// ── Hardcoded Companies Panel ────────────────────────────────────────────────
-function CompaniesPanel() {
-  const UPLOAD_LINK = 'https://ats-checker-tau.vercel.app/improve/inttrvu';
+// ── Companies Panel ────────────────────────────────────────────────
+function CompaniesPanel({ 
+  companies, 
+  createCompany, 
+  onRefresh 
+}: { 
+  companies: Company[], 
+  createCompany: (data: Omit<Company, 'id' | 'createdAt' | 'isActive'>) => Promise<boolean>,
+  onRefresh: () => void 
+}) {
+  const UPLOAD_BASE_LINK = window.location.origin + '/improve/';
+  const DASHBOARD_BASE_LINK = window.location.origin + '/improve/dashboard';
   const [showAdd, setShowAdd] = useState(false);
+  
   const [newName, setNewName] = useState('');
+  const [newSlug, setNewSlug] = useState('');
+  const [newLogoUrl, setNewLogoUrl] = useState('');
   const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(UPLOAD_LINK);
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const handleCreateCompany = async () => {
+    if (!newName || !newSlug || !newEmail || !newPassword) return;
+    setIsSubmitting(true);
+    await createCompany({
+      name: newName,
+      email: newEmail,
+      slug: newSlug,
+      logoUrl: newLogoUrl,
+      dashPassword: newPassword
+    });
+    setNewName('');
+    setNewSlug('');
+    setNewLogoUrl('');
+    setNewEmail('');
+    setNewPassword('');
+    setShowAdd(false);
+    setIsSubmitting(false);
+    onRefresh();
   };
 
   return (
@@ -217,9 +255,9 @@ function CompaniesPanel() {
 
       {/* Add Company Form */}
       {showAdd && (
-        <div className="p-6 bg-white border border-zinc-200 rounded-2xl space-y-4">
-          <h4 className="text-base font-semibold">Add Company</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-6 bg-white border border-zinc-200 rounded-2xl space-y-4 shadow-sm relative">
+          <h4 className="text-lg font-bold text-zinc-900 border-b border-zinc-100 pb-2">Add New Company</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Company Name</label>
               <input
@@ -227,13 +265,28 @@ function CompaniesPanel() {
                 value={newName}
                 onChange={e => setNewName(e.target.value)}
                 placeholder="Ex. Google"
-                className="w-full px-4 py-2 bg-white border border-zinc-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                className="w-full px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none"
               />
-              {newName && (
-                <p className="mt-2 text-xs text-zinc-500">
-                  Preview URL: <span className="font-mono text-teal-500">/improve/{newName.toLowerCase().replace(/\s+/g, '-')}</span>
-                </p>
-              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-1">URL Slug</label>
+              <input
+                type="text"
+                value={newSlug}
+                onChange={e => setNewSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+                placeholder="Ex. google"
+                className="w-full px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-1">Logo URL (Optional)</label>
+              <input
+                type="text"
+                value={newLogoUrl}
+                onChange={e => setNewLogoUrl(e.target.value)}
+                placeholder="https://example.com/logo.png"
+                className="w-full px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-1">Contact Email</label>
@@ -242,60 +295,112 @@ function CompaniesPanel() {
                 value={newEmail}
                 onChange={e => setNewEmail(e.target.value)}
                 placeholder="hr@company.com"
-                className="w-full px-4 py-2 bg-white border border-zinc-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                className="w-full px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-1">Initial Password</label>
+              <input
+                type="text"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+                placeholder="Secure password"
+                className="w-full px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none"
               />
             </div>
           </div>
-          <div className="flex justify-end gap-2 mt-2">
-            <button onClick={() => setShowAdd(false)} className="px-4 py-2 text-zinc-600 hover:bg-zinc-100 rounded-lg text-sm transition-colors">Cancel</button>
-            <button onClick={() => setShowAdd(false)} className="px-4 py-2 bg-zinc-900 text-white rounded-lg text-sm hover:opacity-90 transition-opacity">Save Company</button>
+          <div className="flex justify-end gap-3 pt-2">
+            <button onClick={() => setShowAdd(false)} className="px-5 py-2.5 text-zinc-600 font-medium hover:bg-zinc-100 rounded-xl text-sm transition-colors">Cancel</button>
+            <button 
+              onClick={handleCreateCompany} 
+              disabled={!newName || !newSlug || !newEmail || !newPassword || isSubmitting}
+              className="px-5 py-2.5 bg-zinc-900 font-medium disabled:opacity-50 text-white rounded-xl text-sm hover:bg-zinc-800 transition-colors shadow-sm"
+            >
+              {isSubmitting ? 'Saving...' : 'Save Company'}
+            </button>
           </div>
         </div>
       )}
 
       {/* Companies Table */}
-      <div className="overflow-x-auto rounded-xl border border-zinc-200 bg-white/50">
+      <div className="overflow-x-auto rounded-xl border border-zinc-200 bg-white/60">
         <table className="w-full text-sm text-left">
-          <thead className="bg-zinc-50 border-b border-zinc-200 text-xs text-zinc-500 uppercase">
+          <thead className="bg-zinc-50/80 border-b border-zinc-200 text-xs text-zinc-500 uppercase font-semibold">
             <tr>
               <th className="px-6 py-4">Company</th>
               <th className="px-6 py-4">Slug</th>
-              <th className="px-6 py-4">Upload Link</th>
+              <th className="px-6 py-4">Dashboard Access</th>
               <th className="px-6 py-4">Status</th>
               <th className="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b border-zinc-100">
-              <td className="px-6 py-4">
-                <div className="flex items-center gap-3">
-                  <img src={companyLogo} alt="Inttrvu" className="h-7 object-contain" />
-                </div>
-              </td>
-              <td className="px-6 py-4 font-mono text-xs text-zinc-500">inttrvu</td>
-              <td className="px-6 py-4">
-                <a href={UPLOAD_LINK} target="_blank" rel="noreferrer"
-                  className="text-teal-600 hover:underline text-xs font-mono truncate max-w-[200px] block">
-                  {UPLOAD_LINK}
-                </a>
-              </td>
-              <td className="px-6 py-4">
-                <span className="inline-flex px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">Active</span>
-              </td>
-              <td className="px-6 py-4 text-right">
-                <div className="flex justify-end gap-2 text-zinc-500">
-                  <button onClick={handleCopy} title="Copy Upload Link" className="p-1.5 hover:bg-zinc-100 hover:text-zinc-900 rounded-md">
-                    <Copy className="w-4 h-4" />
-                  </button>
-                  <a href={UPLOAD_LINK} target="_blank" rel="noreferrer" title="Open Upload Page" className="p-1.5 hover:bg-zinc-100 hover:text-zinc-900 rounded-md">
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <button title="Active" className="p-1.5 hover:bg-zinc-100 hover:text-amber-500 rounded-md">
-                    <Power className="w-4 h-4" />
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {companies.map(company => (
+              <tr key={company.id} className="border-b border-zinc-100 hover:bg-white transition-colors group">
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-zinc-100 border border-zinc-200 flex items-center justify-center overflow-hidden shrink-0">
+                      {company.logoUrl ? (
+                         <img src={company.logoUrl} alt={company.name} className="w-full h-full object-contain" />
+                      ) : (
+                         <Building className="w-4 h-4 text-zinc-400" />
+                      )}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-zinc-900">{company.name}</div>
+                      <div className="text-zinc-500 text-xs">{company.email}</div>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono font-bold tracking-widest text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-100">
+                      {company.slug}
+                    </span>
+                    <button onClick={() => handleCopy(company.slug)} className="text-zinc-400 hover:text-teal-600 transition-colors" title="Copy Slug">
+                      <Copy className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </td>
+                <td className="px-6 py-4 font-mono text-xs text-zinc-600">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <span>Pass:</span> <span className="bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-800">{company.dashPassword}</span>
+                      </div>
+                    </div>
+                </td>
+                <td className="px-6 py-4">
+                  {company.isActive ? (
+                    <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700 border border-green-200">Active</span>
+                  ) : (
+                    <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200">Inactive</span>
+                  )}
+                </td>
+                <td className="px-6 py-4 text-right">
+                  <div className="flex justify-end gap-1.5 text-zinc-500">
+                    <button onClick={() => handleCopy(`${UPLOAD_BASE_LINK}${company.slug}`)} title="Copy Upload Link" className="p-2 bg-white border border-zinc-200 hover:bg-zinc-50 hover:text-zinc-900 rounded-lg shadow-sm transition-all focus:ring-2 focus:ring-teal-500 outline-none flex items-center gap-2 text-xs font-medium">
+                      Copy Link
+                    </button>
+                    <a href={DASHBOARD_BASE_LINK} target="_blank" rel="noreferrer" title="Open Dashboard" className="p-2 bg-white border border-zinc-200 hover:bg-zinc-50 hover:text-zinc-900 text-xs font-medium rounded-lg shadow-sm transition-all">
+                      View Dashboard
+                    </a>
+                    <button title={company.isActive ? "Deactivate" : "Activate"} className={`p-2 bg-white border border-zinc-200 rounded-lg shadow-sm transition-all text-xs font-medium ${company.isActive ? 'hover:text-amber-600 hover:bg-amber-50 hover:border-amber-200' : 'hover:text-green-600 hover:bg-green-50 hover:border-green-200'}`}>
+                      {company.isActive ? 'Deactivate' : 'Activate'}
+                    </button>
+                    <button title="Delete Company" className="p-2 bg-white border border-zinc-200 rounded-lg shadow-sm transition-all text-xs font-medium hover:text-red-600 hover:bg-red-50 hover:border-red-200">
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {companies.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-6 py-8 text-center text-zinc-500">
+                  No registered companies found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

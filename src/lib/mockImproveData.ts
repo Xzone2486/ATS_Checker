@@ -1,15 +1,17 @@
 // These interfaces are duplicated here to avoid circular imports;
 // the canonical definitions live in useImprove.ts
-interface Company {
+export interface Company {
   id: string;
   name: string;
   slug: string;
+  logoUrl?: string;
+  dashPassword?: string;
   email: string;
   createdAt: string;
   isActive: boolean;
 }
 
-interface Submission {
+export interface Submission {
   id: string;
   companyId: string;
   companyName: string;
@@ -33,10 +35,22 @@ export const mockCompanies: Company[] = [
     id: "comp-1",
     name: "Inttrvu",
     slug: "inttrvu",
+    logoUrl: "",
+    dashPassword: "password123",
     email: "hr@inttrvu.com",
     createdAt: new Date().toISOString(),
     isActive: true,
   },
+  {
+    id: "comp-2",
+    name: "TCS",
+    slug: "tcs",
+    logoUrl: "",
+    dashPassword: "password123",
+    email: "hr@tcs.com",
+    createdAt: new Date().toISOString(),
+    isActive: true,
+  }
 ];
 
 export const mockSubmissions: Submission[] = [
@@ -47,7 +61,7 @@ export const mockSubmissions: Submission[] = [
     companySlug: "inttrvu",
     candidateName: "John Doe",
     email: "john.doe@example.com",
-    phone: "+91 98765 43210",
+    phone: "9876543210",
     resumeUrl: "https://example.com/resume.pdf",
     fileName: "John_Doe_Resume.pdf",
     fileType: "application/pdf",
@@ -65,7 +79,7 @@ export const mockSubmissions: Submission[] = [
     companySlug: "inttrvu",
     candidateName: "Jane Smith",
     email: "jane.smith@example.com",
-    phone: "+91 87654 32109",
+    phone: "8765432109",
     resumeUrl: "https://example.com/jane_smith.pdf",
     fileName: "Jane_Smith_Resume.pdf",
     fileType: "application/pdf",
@@ -83,7 +97,7 @@ export const mockSubmissions: Submission[] = [
     companySlug: "inttrvu",
     candidateName: "Bob Johnson",
     email: "bob.j@example.com",
-    phone: "+91 76543 21098",
+    phone: "7654321098",
     resumeUrl: "https://example.com/bob_resume.docx",
     fileName: "Bob_Resume_Final.docx",
     fileType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -95,3 +109,9 @@ export const mockSubmissions: Submission[] = [
     flaggedAs: "Fake Resume",
   },
 ];
+
+export const getCompanyByEmail = async (email: string): Promise<Company | undefined> => {
+  // Try to find the company dynamically in the mock pool of current companies
+  // Fallback to initial mock if current array is somehow out of sync (managed in hook usually)
+  return mockCompanies.find(c => c.email === email && c.isActive);
+};

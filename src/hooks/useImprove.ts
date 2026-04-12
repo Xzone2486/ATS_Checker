@@ -6,6 +6,8 @@ export interface Company {
   id: string;
   name: string;
   slug: string;
+  logoUrl?: string;
+  dashPassword?: string;
   email: string;
   createdAt: string;
   isActive: boolean;
@@ -32,6 +34,7 @@ export interface Submission {
 
 // In-memory state for the session to simulate DB mutability
 let currentSubmissions: Submission[] = [...mockSubmissions];
+let currentCompanies: Company[] = [...mockCompanies];
 
 export function useImprove() {
   const [loading, setLoading] = useState(false);
@@ -41,7 +44,7 @@ export function useImprove() {
     setLoading(true);
     return new Promise((resolve) => {
       setTimeout(() => {
-        const company = mockCompanies.find(c => c.slug === slug);
+        const company = currentCompanies.find(c => c.slug.toLowerCase() === slug.toLowerCase() && c.isActive);
         setLoading(false);
         resolve(company || null);
       }, 500);
@@ -52,7 +55,7 @@ export function useImprove() {
     setLoading(true);
     return new Promise((resolve) => {
       setTimeout(() => {
-        const company = mockCompanies.find(c => c.id === id);
+        const company = currentCompanies.find(c => c.id === id);
         setLoading(false);
         resolve(company || null);
       }, 500);
@@ -93,12 +96,12 @@ export function useImprove() {
   };
 
   // Get submissions for a company (Company Dashboard)
-  const getCompanySubmissions = async (companySlug: string): Promise<Submission[]> => {
+  const getCompanySubmissions = async (companyId: string): Promise<Submission[]> => {
     setLoading(true);
     return new Promise((resolve) => {
       setTimeout(() => {
         setLoading(false);
-        resolve(currentSubmissions.filter(sub => sub.companySlug === companySlug));
+        resolve(currentSubmissions.filter(sub => sub.companyId === companyId));
       }, 800);
     });
   };
@@ -120,7 +123,7 @@ export function useImprove() {
     return new Promise((resolve) => {
       setTimeout(() => {
         setLoading(false);
-        resolve([...mockCompanies]);
+        resolve([...currentCompanies]);
       }, 500);
     });
   };
@@ -138,6 +141,23 @@ export function useImprove() {
     });
   };
 
+  const createCompany = async (data: Omit<Company, 'id' | 'createdAt' | 'isActive'>): Promise<boolean> => {
+    setLoading(true);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const newCompany: Company = {
+          ...data,
+          id: `comp-${Date.now()}`,
+          createdAt: new Date().toISOString(),
+          isActive: true,
+        };
+        currentCompanies = [newCompany, ...currentCompanies];
+        setLoading(false);
+        resolve(true);
+      }, 500);
+    });
+  };
+
   return {
     loading,
     getCompanyBySlug,
@@ -147,5 +167,6 @@ export function useImprove() {
     getAllSubmissions,
     getAllCompanies,
     updateSubmissionStatus,
+    createCompany,
   };
 }
