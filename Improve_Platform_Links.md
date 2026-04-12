@@ -1,12 +1,11 @@
-# 🔗 Rozgar24x7 Improve Platform - Quick Access Links
+# 🔗 Rozgar24x7 Improve Platform - Live Access Links
 
-Use this file to quickly navigate to the different modules of the hidden "Improve" platform on both Local and Live environments.
+Use this file to quickly navigate to the different modules of the hidden "Improve" platform on the production environment.
 
 ---
 
 ## 🛠 Admin Dashboard
-**Local:** [http://localhost:5173/improve/admin](http://localhost:5173/improve/admin)  
-**Live:** [https://ats-checker-tau.vercel.app/improve/admin](https://ats-checker-tau.vercel.app/improve/admin)
+- **URL:** [https://ats-checker-tau.vercel.app/improve/admin](https://ats-checker-tau.vercel.app/improve/admin)
 
 - **Purpose:** Manage all companies, view global submissions, and flag candidates.
 - **Login Credentials:**
@@ -15,29 +14,45 @@ Use this file to quickly navigate to the different modules of the hidden "Improv
 ---
 
 ## 🏢 Company HR Dashboard
-**Local:** [http://localhost:5173/improve/dashboard](http://localhost:5173/improve/dashboard)  
-**Live:** [https://ats-checker-tau.vercel.app/improve/dashboard](https://ats-checker-tau.vercel.app/improve/dashboard)
+- **URL:** [https://ats-checker-tau.vercel.app/improve/dashboard](https://ats-checker-tau.vercel.app/improve/dashboard)
 
 - **Purpose:** Recruitment portal for specific companies to manage their own talent pipeline.
 - **Login Credentials (Email + Password):**
-  - Inttrvu → `hr@inttrvu.com` / `password123`
-  - TCS → `hr@tcs.com` / `password123`
+  - **Inttrvu:** `hr@inttrvu.com` / `password123`
+  - **TCS:** `hr@tcs.com` / `password123`
   - *(Add new companies via Admin Dashboard — credentials are stored in mockImproveData.ts)*
 
 ---
 
 ## 📤 Candidate Upload Page (Public, Slug-Based)
-**Local Example:** [http://localhost:5173/improve/inttrvu](http://localhost:5173/improve/inttrvu)  
-**Live Example:** [https://ats-checker-tau.vercel.app/improve/inttrvu](https://ats-checker-tau.vercel.app/improve/inttrvu)
+- **Inttrvu:** [https://ats-checker-tau.vercel.app/improve/inttrvu](https://ats-checker-tau.vercel.app/improve/inttrvu)
+- **TCS:** [https://ats-checker-tau.vercel.app/improve/tcs](https://ats-checker-tau.vercel.app/improve/tcs)
 
 - **Purpose:** Unique per-company URL for candidates to submit resumes. No code required — just share the link!
-- **URL Format:** `/improve/:companySlug` (e.g. `/improve/tcs`, `/improve/google`)
+- **URL Format:** `https://ats-checker-tau.vercel.app/improve/:companySlug`
 - Invalid or inactive slugs show a clean 404-style error page.
 
 ---
 
-> [!IMPORTANT]
-> **To see these links live:** 
-> 1. You must **Git Push** current changes to your connected repository.
-> 2. Wait for the Vercel Build to complete.
-> 3. Ensure `vercel.json` is included in your push to prevent 404 on refresh errors!
+## 🎨 Logo Management
+To display a custom company logo in the Navbar and Hero section:
+1.  **Upload Logo:** Place the logo file (PNG/JPG) in `src/components/improve/`.
+2.  **Register Logo:** Import it in `src/lib/companyLogos.ts` and add it to the `companyLogoMap`.
+    ```typescript
+    import my_logo from '@/components/improve/my_logo.png';
+    export const companyLogoMap = {
+      'my-company-slug': my_logo,
+      // ...
+    };
+    ```
+3.  **Slug Match:** Ensure the company **Slug** you create in the Admin Dashboard exactly matches the key used in the map.
+
+---
+
+## 🔑 Access Credentials Summary
+
+| Portal | ID / Email | Password |
+|---|---|---|
+| **Admin Dashboard** | (Any) | `admin123` |
+| **Inttrvu (HR)** | `hr@inttrvu.com` | `password123` |
+| **TCS (HR)** | `hr@tcs.com` | `password123` |
