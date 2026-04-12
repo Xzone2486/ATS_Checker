@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Upload, FileText, CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { Upload, FileText, CheckCircle2, AlertCircle, X, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ResumeUploadFormProps {
@@ -76,22 +76,46 @@ export function ResumeUploadForm({ companyName, onSubmit }: ResumeUploadFormProp
  if (success) {
  return (
  <motion.div 
- initial={{ opacity: 0, scale: 0.95 }}
- animate={{ opacity: 1, scale: 1 }}
- className="w-full max-w-xl mx-auto rounded-3xl border border-white/20 bg-white/60 backdrop-blur-3xl p-10 text-center shadow-2xl"
+ initial={{ opacity: 0, scale: 0.95, y: 20 }}
+ animate={{ opacity: 1, scale: 1, y: 0 }}
+ className="w-full max-w-xl mx-auto rounded-[2rem] border border-teal-500/20 bg-white/80 backdrop-blur-3xl p-10 text-center shadow-[0_8px_30px_rgb(20,184,166,0.15)] relative overflow-hidden"
  >
+ {/* Background glow */}
+ <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-teal-500/10 blur-[60px] rounded-full pointer-events-none" />
+
+ <div className="relative z-10">
  <motion.div
- initial={{ scale: 0 }}
- animate={{ scale: 1 }}
- transition={{ type: "spring", delay: 0.2 }}
- className="w-24 h-24 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-6 shadow-lg shadow-green-500/30"
+ initial={{ scale: 0, rotate: -15 }}
+ animate={{ scale: 1, rotate: 0 }}
+ transition={{ type: "spring", delay: 0.2, bounce: 0.5 }}
+ className="w-24 h-24 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-3xl mx-auto flex items-center justify-center mb-8 shadow-xl shadow-teal-500/30 rotate-3 transform relative"
  >
- <CheckCircle2 className="w-12 h-12 text-white" />
+ <div className="absolute inset-0 border border-white/20 rounded-3xl" />
+ <CheckCircle2 className="w-12 h-12 text-white drop-shadow-md" />
+ <motion.div
+ initial={{ scale: 0, opacity: 0 }}
+ animate={{ scale: 1, opacity: 1 }}
+ transition={{ delay: 0.5 }}
+ className="absolute -top-3 -right-3 p-2 bg-white rounded-full shadow-lg"
+ >
+ <Sparkles className="w-5 h-5 text-emerald-500" />
  </motion.div>
- <h2 className="text-3xl font-bold text-zinc-900 mb-4">Resume Submitted Successfully!</h2>
- <p className="text-zinc-600 text-lg">
- Our team at Inttrvu will review your application and get back to you soon.
+ </motion.div>
+
+ <motion.div
+ initial={{ y: 10, opacity: 0 }}
+ animate={{ y: 0, opacity: 1 }}
+ transition={{ delay: 0.3 }}
+ >
+ <h2 className="text-3xl flex justify-center items-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-teal-900 to-zinc-900 mb-4 tracking-tight leading-normal">
+ Thank you for submitting your resume!
+ </h2>
+ <p className="text-zinc-600 text-lg leading-relaxed max-w-sm mx-auto mb-8">
+ Our team will make it <span className="font-semibold text-teal-700">ATS friendly</span> and send it to your mail soon.
  </p>
+ </motion.div>
+
+ </div>
  </motion.div>
  );
  }
@@ -137,11 +161,11 @@ export function ResumeUploadForm({ companyName, onSubmit }: ResumeUploadFormProp
  <input 
  type="tel" 
  value={phone}
- onChange={(e) => setPhone(e.target.value)}
+ onChange={(e) => setPhone(e.target.value.replace(/\s+/g, ''))}
  required
- pattern="^\+?91[6-9][0-9]{9}$"
- title="Please enter a valid 10 digit Indian number. e.g. +91 9876543210"
- placeholder="+91 98765 43210"
+ pattern="^(\+\d{1,3})?\d{10}$"
+ title="Please enter exactly 10 digits, optionally preceded by a country code (e.g. 9876543210 or +919876543210)"
+ placeholder="+919876543210"
  className="w-full px-4 py-3 bg-white border border-zinc-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none text-zinc-900 transition-all shadow-sm"
  />
  </div>
