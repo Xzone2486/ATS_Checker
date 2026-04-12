@@ -193,7 +193,7 @@ export default function AdminDashboard() {
 
 // ── Hardcoded Companies Panel ────────────────────────────────────────────────
 function CompaniesPanel() {
-  const UPLOAD_LINK = 'http://localhost:5173/improve/inttrvu';
+  const UPLOAD_LINK = 'https://ats-checker-tau.vercel.app/improve/inttrvu';
   const [showAdd, setShowAdd] = useState(false);
   const [newName, setNewName] = useState('');
   const [newEmail, setNewEmail] = useState('');
