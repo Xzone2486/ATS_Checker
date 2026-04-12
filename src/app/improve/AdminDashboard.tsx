@@ -100,7 +100,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 transition-colors">
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-4 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <span className="text-xl font-bold tracking-tight">Rozgar24x7<span className="text-teal-600">Admin</span></span>
           <div className="hidden sm:flex ml-8 gap-1 p-1 bg-zinc-100 rounded-lg">

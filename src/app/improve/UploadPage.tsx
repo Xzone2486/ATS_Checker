@@ -68,8 +68,8 @@ export default function UploadPage() {
 
       <div className="relative z-10">
         {/* Header matching ATS checker light mode */}
-        <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4 max-w-7xl mx-auto w-full">
+        <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-4 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4 w-full">
             <img src={companyLogo} alt="Inttrvu Logo" className="h-8 object-contain" />
           </div>
         </header>

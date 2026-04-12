@@ -109,7 +109,7 @@ export default function CompanyDashboard() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 transition-colors">
       {/* Sidebar/Nav */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-4 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <img src={companyLogo} alt="Inttrvu Logo" className="h-8 object-contain" />
         </div>
