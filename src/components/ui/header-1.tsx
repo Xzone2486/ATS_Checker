@@ -11,7 +11,7 @@ import { useAuth } from '@/lib/auth-context';
 import { SignInModal } from '@/components/auth/SignInModal';
 import { LogOut, LayoutDashboard, FileText, BarChart2, ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function Header() {
 	const [open, setOpen] = React.useState(false);
@@ -20,6 +20,7 @@ export function Header() {
 	const { user, signOut, openModal } = useAuth();
 	const profileRef = React.useRef<HTMLDivElement>(null);
 	const pathname = useLocation().pathname;
+	const navigate = useNavigate();
 
 	const links = [
 		{ label: 'Features', href: '/#features' },
@@ -139,7 +140,14 @@ export function Header() {
 						) : (
 							<>
 								<Button className="font-medium" variant="outline" onClick={openModal}>Sign In</Button>
-								<Button variant="gradient" className="font-medium shadow-sm" onClick={openModal}>Get Started</Button>
+								{/* REVERT_GUIDE: To restore the login modal, change the onClick back to openModal */}
+								<Button 
+									variant="gradient" 
+									className="font-medium shadow-sm" 
+									onClick={() => navigate("/ats-analysis")}
+								>
+									Get Started
+								</Button>
 							</>
 						)}
 					</div>
@@ -201,7 +209,12 @@ export function Header() {
 								<Button variant="outline" className="w-full bg-transparent" onClick={() => { setOpen(false); openModal(); }}>
 									Sign In
 								</Button>
-								<Button className="w-full" variant="gradient" onClick={() => { setOpen(false); openModal(); }}>
+								{/* REVERT_GUIDE: To restore the login modal on mobile, change onClick back to openModal() */}
+								<Button 
+									className="w-full" 
+									variant="gradient" 
+									onClick={() => { setOpen(false); navigate("/ats-analysis"); }}
+								>
 									Get Started
 								</Button>
 							</>

@@ -35,17 +35,40 @@ export default function UploadPage() {
 
   if (!company) {
     return (
-      <div className="min-h-screen bg-zinc-50 text-zinc-900 flex items-center justify-center p-6 pb-20 selection:bg-teal-500/30">
-        <div className="w-full max-w-md p-8 md:p-10 rounded-3xl bg-white border border-zinc-200 shadow-2xl text-center">
-            <div className="w-16 h-16 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-6">
-                <AlertCircle className="w-8 h-8" />
-            </div>
-            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 mb-2">Link not found or inactive</h1>
-            <p className="text-zinc-500 mb-8 leading-relaxed">We couldn't find an active submission portal for this URL. Please check the link and try again.</p>
-            <Link to="/" className="inline-flex items-center justify-center px-6 py-3 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-medium transition-colors">
-                Return to Homepage
-            </Link>
+      <div className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col items-center justify-center p-6 pb-20 selection:bg-teal-500/30">
+        {/* Logo in 404 state */}
+        <div className="mb-12">
+            <span className="font-extrabold text-3xl tracking-tighter text-teal-600 flex items-center gap-2">
+                Improve<span className="w-2 h-2 rounded-full bg-teal-500 mt-2"></span>
+            </span>
         </div>
+
+        <div className="w-full max-w-md p-10 rounded-3xl bg-white border border-zinc-200 shadow-2xl text-center relative overflow-hidden group">
+            {/* Glow effect */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500/5 blur-[80px] rounded-full group-hover:bg-red-500/10 transition-all duration-700" />
+            
+            <div className="relative z-10">
+                <div className="w-20 h-20 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-8 rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                    <AlertCircle className="w-10 h-10" />
+                </div>
+                <h1 className="text-3xl font-bold tracking-tight text-zinc-900 mb-4">Portal Inactive</h1>
+                <p className="text-zinc-500 mb-10 leading-relaxed text-lg">
+                    This submission link is either invalid, expired, or has been deactivated by the administrator.
+                </p>
+                <div className="flex flex-col gap-3">
+                    <Link to="/" className="inline-flex items-center justify-center px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-zinc-200">
+                        Go to Homepage
+                    </Link>
+                    <button onClick={() => window.location.reload()} className="px-8 py-4 text-zinc-600 hover:text-zinc-900 font-medium transition-colors">
+                        Try refreshing
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <p className="mt-12 text-zinc-400 text-sm font-medium">
+            Error Code: 404_PORTAL_NOT_FOUND
+        </p>
       </div>
     );
   }
@@ -79,7 +102,11 @@ export default function UploadPage() {
         {/* Header */}
         <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-4 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4 w-full">
-            {getCompanyLogo(company.slug) ? (
+            {company.slug === 'for_all' ? (
+                <span className="font-extrabold text-2xl tracking-tighter text-teal-600 flex items-center gap-1">
+                    Improve<span className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-1.5"></span>
+                </span>
+            ) : getCompanyLogo(company.slug) ? (
               <img
                 src={getCompanyLogo(company.slug)!}
                 alt={company.name}
@@ -96,7 +123,7 @@ export default function UploadPage() {
         {/* Hero Section */}
         <main className="px-6 pt-32 pb-12 max-w-7xl mx-auto">
           <div className="text-center mb-14 max-w-3xl mx-auto flex flex-col items-center">
-            {getCompanyLogo(company.slug) && (
+            {company.slug !== 'for_all' && getCompanyLogo(company.slug) && (
                 <img 
                   src={getCompanyLogo(company.slug)!} 
                   alt={`${company.name} logo`} 
@@ -104,16 +131,45 @@ export default function UploadPage() {
                 />
             )}
             <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight mb-4">
-              Submit Your Resume to {company.name}
+              {company.slug === 'for_all' ? 'Enhance Your Resume Score' : `Submit Your Resume to ${company.name}`}
             </h1>
-            <p className="text-xl text-zinc-600 max-w-md mx-auto">
-              One upload. Unlimited opportunities. Get noticed faster.
+            <p className="text-xl text-zinc-600 max-w-lg mx-auto">
+              {company.slug === 'for_all' 
+                ? 'Join our platform to get detailed ATS analysis and AI-powered recommendations.'
+                : 'One upload. Unlimited opportunities. Get noticed faster by recruiters.'}
             </p>
           </div>
 
-          <DosDonts />
-
           <ResumeUploadForm company={company} />
+
+          {/* Guidelines Disclaimer */}
+          <div className="mt-20 max-w-2xl mx-auto p-8 rounded-3xl bg-zinc-100/50 border border-zinc-200/50 backdrop-blur-sm">
+            <h3 className="text-lg font-bold text-zinc-900 mb-4 flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-teal-600" />
+              Submission Guidelines
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 className="font-semibold text-zinc-700 mb-2">What to Upload:</h4>
+                <ul className="space-y-2 text-zinc-600 list-disc list-inside">
+                  <li>Professional resumes (PDF, DOCX)</li>
+                  <li>Files smaller than 5MB</li>
+                  <li>Updated contact information</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-zinc-700 mb-2">What Not to Upload:</h4>
+                <ul className="space-y-2 text-zinc-600 list-disc list-inside">
+                  <li>Encrypted or password-protected files</li>
+                  <li>Images, ZIPs, or executable files</li>
+                  <li>Duplicate submissions</li>
+                </ul>
+              </div>
+            </div>
+            <p className="mt-6 text-xs text-zinc-400 italic border-t border-zinc-200 pt-4">
+              Disclaimer: By submitting your resume, you agree to our terms of processing. We use AI to analyze your resume and provide feedback.
+            </p>
+          </div>
         </main>
 
         {/* Footer */}

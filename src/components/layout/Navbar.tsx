@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, ChevronDown, LogOut, LayoutDashboard, FileText, BarChart2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "@/lib/auth-context"
 import { SignInModal } from "@/components/auth/SignInModal"
 
@@ -20,9 +20,9 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
   const [profileOpen, setProfileOpen] = React.useState(false)
-  const pathname = useLocation().pathname
   const { user, signOut, openModal } = useAuth()
   const profileRef = React.useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   React.useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -124,7 +124,14 @@ export function Navbar() {
             ) : (
               <div className="hidden sm:flex items-center gap-2">
                 <Button variant="ghost" onClick={openModal} className="hidden lg:inline-flex text-[15px] font-bold">Sign In</Button>
-                <Button variant="gradient" onClick={openModal} className="text-[15px] font-bold px-6">Get Started Free</Button>
+                {/* REVERT_GUIDE: To restore the login modal, change the onClick back to openModal */}
+                <Button 
+                  variant="gradient" 
+                  onClick={() => navigate("/ats-analysis")} 
+                  className="text-[15px] font-bold px-6"
+                >
+                  Get Started Free
+                </Button>
               </div>
             )}
 
@@ -160,7 +167,14 @@ export function Navbar() {
         </nav>
         <div className="flex flex-col gap-4 mt-auto">
           <Button variant="outline" className="w-full text-lg h-12" onClick={() => { setMobileMenuOpen(false); openModal() }}>Sign In</Button>
-          <Button variant="gradient" className="w-full text-lg h-12" onClick={() => { setMobileMenuOpen(false); openModal() }}>Get Started Free</Button>
+          {/* REVERT_GUIDE: To restore the login modal on mobile, change onClick back to openModal() */}
+          <Button 
+            variant="gradient" 
+            className="w-full text-lg h-12" 
+            onClick={() => { setMobileMenuOpen(false); navigate("/ats-analysis") }}
+          >
+            Get Started Free
+          </Button>
         </div>
       </motion.div>
     </>

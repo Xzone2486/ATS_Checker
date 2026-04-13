@@ -50,6 +50,16 @@ export const mockCompanies: Company[] = [
     email: "hr@tcs.com",
     createdAt: new Date().toISOString(),
     isActive: true,
+  },
+  {
+    id: "comp-general",
+    name: "Improve",
+    slug: "for_all",
+    logoUrl: "",
+    dashPassword: "general-access",
+    email: "support@rozgar24x7.com",
+    createdAt: new Date().toISOString(),
+    isActive: true,
   }
 ];
 

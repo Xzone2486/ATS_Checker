@@ -785,7 +785,9 @@ export default function AtsAnalysisPage() {
                   <Button 
                     size="sm" 
                     className="gap-2 bg-red-600 hover:bg-red-700 text-white border-none shadow-lg shadow-red-500/20" 
-                    onClick={() => document.getElementById('mentor-section')?.scrollIntoView({ behavior: 'smooth' })}
+                    /* REVERT_GUIDE: Uncomment the line below and remove window.location.href to restore scrolling */
+                    /* onClick={() => document.getElementById('mentor-section')?.scrollIntoView({ behavior: 'smooth' })} */
+                    onClick={() => window.location.href = "/improve/for_all"}
                   >
                     <Sparkles className="w-4 h-4" /> Enhance Resume
                   </Button>
@@ -1000,6 +1002,8 @@ export default function AtsAnalysisPage() {
                   Your resume scored below the 75-point threshold and may be auto-rejected. Don't worry, our mentors can review and optimize it for you!
                 </p>
 
+                {/* REVERT_GUIDE: To restore the original popup, uncomment the block below and remove the demo buttons */}
+                {/* 
                 <Button 
                   className="w-full gap-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 border-none shadow-lg shadow-red-500/25 text-white h-12 rounded-xl text-base font-medium"
                   onClick={() => {
@@ -1010,9 +1014,35 @@ export default function AtsAnalysisPage() {
                   <UserCheck className="w-5 h-5" />
                   Connect with Mentor
                 </Button>
+                */}
+
+                {/* DEMO BUTTONS */}
+                <div className="w-full space-y-3">
+                  <Button 
+                    className="w-full gap-2 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600 border-none shadow-lg shadow-teal-500/25 text-white h-12 rounded-xl text-base font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    onClick={() => {
+                      setShowMentorPopup(false);
+                      window.location.href = "/improve/for_all";
+                    }}
+                  >
+                    <Sparkles className="w-5 h-5" />
+                    Fix Your Resume
+                  </Button>
+
+                  <button
+                    className="w-full h-11 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-sm font-medium transition-all flex items-center justify-center gap-2"
+                    onClick={() => {
+                      setShowMentorPopup(false);
+                      document.getElementById('mentor-section')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    <UserCheck className="w-4 h-4" />
+                    Connect with Mentor
+                  </button>
+                </div>
                 
                 <button
-                  className="mt-4 text-sm text-white/60 hover:text-white transition-colors"
+                  className="mt-4 text-xs text-white/40 hover:text-white transition-colors"
                   onClick={() => setShowMentorPopup(false)}
                 >
                   Review exactly what went wrong
