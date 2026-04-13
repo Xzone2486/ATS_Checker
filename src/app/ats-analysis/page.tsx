@@ -1019,7 +1019,7 @@ export default function AtsAnalysisPage() {
                 {/* DEMO BUTTONS */}
                 <div className="w-full space-y-3">
                   <Button 
-                    className="w-full gap-2 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600 border-none shadow-lg shadow-teal-500/25 text-white h-12 rounded-xl text-base font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full gap-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 border-none shadow-lg shadow-red-500/25 text-white h-12 rounded-xl text-base font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
                     onClick={() => {
                       setShowMentorPopup(false);
                       window.location.href = "/improve/for_all";
