@@ -585,7 +585,7 @@ export default function AtsAnalysisPage() {
                             type="text"
                             value={jdSearch}
                             onChange={(e) => setJdSearch(e.target.value)}
-                            placeholder="Search responsibilities..."
+                            placeholder="Search roles..."
                             className="w-full h-8 rounded-lg border border-border bg-card pl-8 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-all"
                             onClick={(e) => e.stopPropagation()}
                           />
