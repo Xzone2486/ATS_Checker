@@ -5,7 +5,7 @@ import { AuthProvider } from '@/lib/auth-context';
 // Import pages
 import HomePage from '@/app/page';
 import AtsAnalysisPage from '@/app/ats-analysis/page';
-import PricingPage from '@/app/pricing/page';
+// import PricingPage from '@/app/pricing/page';
 
 // Layouts
 import DashboardLayout from '@/app/dashboard/layout';
@@ -37,7 +37,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/ats-analysis" element={<AtsAnalysisPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
+          {/* <Route path="/pricing" element={<PricingPage />} /> */}
           
           <Route element={<DashboardLayoutWrapper />}>
             <Route path="/dashboard" element={<DashboardPage />} />

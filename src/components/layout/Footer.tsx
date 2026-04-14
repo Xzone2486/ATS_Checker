@@ -45,7 +45,7 @@ export function Footer() {
             <ul className="space-y-3">
               {/* <li><Link to="/resume-builder" className="text-sm text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Resume Builder</Link></li> */}
               <li><Link to="/ats-analysis" className="text-sm text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors">ATS Checker</Link></li>
-              <li><Link to="/pricing" className="text-sm text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Pricing</Link></li>
+              {/* <li><Link to="/pricing" className="text-sm text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Pricing</Link></li> */}
               {/* <li><a href="#" className="text-sm text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Templates</a></li> */}
             </ul>
           </div>

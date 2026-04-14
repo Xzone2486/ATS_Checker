@@ -13,7 +13,7 @@ const navLinks = [
   { name: "Features", href: "/#features" },
   { name: "ATS Checker", href: "/ats-analysis" },
   { name: "Examples", href: "/#examples" },
-  { name: "Pricing", href: "/pricing" },
+  // { name: "Pricing", href: "/pricing" },
 ]
 
 export function Navbar() {

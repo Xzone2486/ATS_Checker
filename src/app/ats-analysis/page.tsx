@@ -212,36 +212,36 @@ const JOB_EXAMPLES: JobExample[] = [
 ]
 
 const JD_ITEMS: string[] = [
-  "Designed and deployed scalable machine learning models for real-world applications.",
-  "Built and optimized data pipelines for processing large-scale structured and unstructured data.",
-  "Developed and maintained RESTful APIs to support backend services.",
-  "Implemented CI/CD pipelines to automate build, testing, and deployment workflows.",
-  "Created interactive dashboards and visualizations to support business decision-making.",
-  "Collaborated with cross-functional teams to translate business requirements into technical solutions.",
-  "Applied statistical analysis and predictive modeling to extract actionable insights.",
-  "Engineered features and performed data preprocessing to improve model accuracy.",
-  "Designed cloud-based architectures using modern infrastructure solutions.",
-  "Ensured application security by implementing best practices and vulnerability testing.",
-  "Developed responsive and user-friendly frontend interfaces.",
-  "Managed databases, including schema design, optimization, and query performance tuning.",
-  "Conducted code reviews and enforced software development best practices.",
-  "Built and deployed containerized applications using Docker and orchestration tools.",
-  "Integrated third-party services and APIs into existing platforms.",
-  "Automated repetitive tasks to improve operational efficiency.",
-  "Monitored system performance and resolved production issues proactively.",
-  "Implemented authentication and authorization mechanisms for secure systems.",
-  "Designed and trained NLP models for text analysis and language understanding tasks.",
-  "Worked on computer vision models for image classification and detection.",
-  "Researched and experimented with new algorithms and emerging technologies.",
-  "Improved application scalability and performance through optimization techniques.",
-  "Maintained documentation for systems, workflows, and technical processes.",
-  "Participated in Agile/Scrum ceremonies to ensure timely project delivery.",
-  "Developed mobile applications for Android/iOS using modern frameworks.",
-  "Built and deployed smart contracts or blockchain-based applications.",
-  "Ensured data governance, compliance, and privacy standards were met.",
-  "Conducted penetration testing and vulnerability assessments to enhance security.",
-  "Designed user-centric UI/UX flows to improve product usability and engagement.",
-  "Led or supported project management activities including planning, tracking, and reporting.",
+  "Machine Learning",
+  "Data Pipelines",
+  "Backend APIs",
+  "CI/CD Workflows",
+  "Data Visualization",
+  "Cross-functional",
+  "Statistical Analysis",
+  "Data Preprocessing",
+  "Cloud Architecture",
+  "Security Testing",
+  "Frontend UI",
+  "Database Tuning",
+  "Code Reviews",
+  "Containerization",
+  "API Integrations",
+  "Task Automation",
+  "System Monitoring",
+  "Authentication",
+  "NLP Models",
+  "Computer Vision",
+  "Algorithm Research",
+  "App Scalability",
+  "Documentation",
+  "Agile/Scrum",
+  "Mobile Apps",
+  "Blockchain",
+  "Data Governance",
+  "Penetration Testing",
+  "UI/UX Design",
+  "Project Management",
 ]
 
 export default function AtsAnalysisPage() {
@@ -504,32 +504,7 @@ export default function AtsAnalysisPage() {
                   )}
                 </div>
 
-                {/* Target Job Role Card */}
-                <div className="relative group">
-                  <div className="flex w-full items-center gap-3 px-4 py-3.5 text-left rounded-2xl border border-border bg-card transition-colors">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-muted text-muted-foreground">
-                      <Briefcase className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <label className="text-sm font-medium text-foreground block">
-                        Target Job Role
-                        <span className="ml-2 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">
-                          Optional
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        value={jobRole}
-                        onChange={(e) => setJobRole(e.target.value)}
-                        placeholder="e.g. Senior Frontend Engineer"
-                        className="w-full bg-transparent border-none p-0 text-xs text-muted-foreground mt-0.5 focus:ring-0 focus:outline-none placeholder:text-muted-foreground/40"
-                      />
-                    </div>
-                  </div>
-                  <p className="absolute -top-6 left-1 text-[11px] font-medium text-muted-foreground/70 uppercase tracking-wider">
-                    Role Accuracy
-                  </p>
-                </div>
+
 
 
                 {/* ── JD Responsibilities Dropdown ── */}
@@ -660,6 +635,30 @@ export default function AtsAnalysisPage() {
                       </div>
                     </div>
                   )}
+                </div>
+
+                {/* ── Paste Custom JD Textarea ── */}
+                <div className="relative group">
+                  <div className="flex w-full items-start gap-3 px-4 py-3.5 text-left rounded-2xl border border-border bg-card transition-colors">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-muted text-muted-foreground mt-0.5">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <label className="text-sm font-medium text-foreground block">
+                        Job Description
+                        <span className="ml-2 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">
+                          Optional
+                        </span>
+                      </label>
+                      <textarea
+                        value={customJd}
+                        onChange={(e) => setCustomJd(e.target.value)}
+                        placeholder="Paste the target job description or copy/paste the requirements here to match your resume against them."
+                        className="w-full bg-transparent border-none p-0 text-sm text-muted-foreground mt-1.5 focus:ring-0 focus:outline-none placeholder:text-muted-foreground/40 resize-y min-h-[160px] leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
                 </div>
 
                 {/* Analyze Button */}

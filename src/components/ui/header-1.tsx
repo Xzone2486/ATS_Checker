@@ -24,7 +24,7 @@ export function Header() {
 
 	const links = [
 		{ label: 'Features', href: '/#features' },
-		{ label: 'Pricing', href: '/pricing' },
+// { label: 'Pricing', href: '/pricing' },
 		{ label: 'ATS Checker', href: '/ats-analysis' },
 	];
 

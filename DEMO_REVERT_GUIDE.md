@@ -33,6 +33,15 @@ This guide explains how to restore the original functionality of the ATS Analysi
    - Change `grid-cols-1` back to `grid-cols-2`.
    - Restore the original button mapping (remove LinkedIn if not needed permanently).
 
+## 3. Pricing Section
+**Files:** `src/App.tsx`, `src/components/layout/Navbar.tsx`, `src/components/ui/header-1.tsx`, `src/components/layout/Footer.tsx`
+
+**To Revert:**
+1. In `src/App.tsx`, uncomment the `PricingPage` import and the `/pricing` Route.
+2. In `src/components/layout/Navbar.tsx`, uncomment the `Pricing` link in the `navLinks` array.
+3. In `src/components/ui/header-1.tsx`, uncomment the `Pricing` link in the `links` array.
+4. In `src/components/layout/Footer.tsx`, uncomment the `Pricing` list item under the "Product" column.
+
 ## 3. General (Optional)
 If you added any test data or general slugs in `mockImproveData.ts` for the demo, you can remove them or set `isActive: false`.
 
