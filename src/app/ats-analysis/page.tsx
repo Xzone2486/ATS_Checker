@@ -566,7 +566,7 @@ export default function AtsAnalysisPage() {
                       <p className="text-xs text-muted-foreground mt-0.5">
                         {selectedJdItems.size > 0
                           ? "Click to review or modify selections"
-                          : "Select responsibilities to build a targeted JD"}
+                          : "Select roles to build a targeted JD"}
                       </p>
                     </div>
                     <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
