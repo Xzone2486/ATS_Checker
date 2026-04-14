@@ -212,36 +212,36 @@ const JOB_EXAMPLES: JobExample[] = [
 ]
 
 const JD_ITEMS: string[] = [
-  "Machine Learning",
-  "Data Pipelines",
-  "Backend APIs",
-  "CI/CD Workflows",
-  "Data Visualization",
-  "Cross-functional",
-  "Statistical Analysis",
-  "Data Preprocessing",
-  "Cloud Architecture",
-  "Security Testing",
-  "Frontend UI",
-  "Database Tuning",
-  "Code Reviews",
-  "Containerization",
-  "API Integrations",
-  "Task Automation",
-  "System Monitoring",
-  "Authentication",
-  "NLP Models",
-  "Computer Vision",
-  "Algorithm Research",
-  "App Scalability",
-  "Documentation",
-  "Agile/Scrum",
-  "Mobile Apps",
-  "Blockchain",
-  "Data Governance",
-  "Penetration Testing",
-  "UI/UX Design",
-  "Project Management",
+  "AI/ML Engineer",
+  "Generative AI Engineer",
+  "NLP Specialist",
+  "Computer Vision Engineer",
+  "AI Ethics & Compliance Officer",
+  "AI Product Manager",
+  "Machine Learning Scientist",
+  "Robotics Engineer",
+  "Data Scientist",
+  "Data Engineer",
+  "Big Data Architect",
+  "Business Intelligence Analyst",
+  "Data Governance Specialist",
+  "Full-Stack Developer",
+  "Backend Engineer",
+  "Frontend Engineer",
+  "Mobile App Developer",
+  "Blockchain Developer",
+  "Embedded Systems Engineer",
+  "Game Developer",
+  "Cloud Solutions Architect",
+  "DevOps Engineer",
+  "Site Reliability Engineer (SRE)",
+  "Platform Engineer",
+  "FinOps Specialist",
+  "Cybersecurity Analyst",
+  "Ethical Hacker (Penetration Tester)",
+  "Application Security Engineer",
+  "UI/UX Designer",
+  "IT Project Manager",
 ]
 
 export default function AtsAnalysisPage() {
@@ -292,14 +292,7 @@ export default function AtsAnalysisPage() {
     return () => document.removeEventListener("mousedown", handler)
   }, [])
 
-  // Sync selected JD items → customJd string
-  useEffect(() => {
-    setCustomJd(
-      selectedJdItems.size > 0
-        ? Array.from(selectedJdItems).map((item) => `• ${item}`).join("\n")
-        : ""
-    )
-  }, [selectedJdItems])
+
 
   const toggleJdItem = (item: string) => {
     setSelectedJdItems((prev) => {
