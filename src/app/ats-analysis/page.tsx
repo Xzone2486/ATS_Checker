@@ -521,7 +521,7 @@ export default function AtsAnalysisPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground flex items-center gap-2">
-                        Select Custom JD
+                        Select Job Roles
                         <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">
                           Optional
                         </span>
