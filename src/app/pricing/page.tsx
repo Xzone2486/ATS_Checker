@@ -3,60 +3,45 @@
 import { Header } from "@/components/ui/header-1"
 import { Footer } from "@/components/layout/Footer"
 import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Check, Sparkles, X, CreditCard, ShieldCheck, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 
 const plans = [
   {
-    name: "Starter",
-    description: "Perfect for entry-level roles",
-    monthlyPrice: 99,
-    annuallyPrice: 990,
-    features: [
-      "1 AI-tailored resume",
-      "Basic ATS scanning",
-      "Standard templates",
-      "Export to PDF",
-    ],
-    highlight: false,
-  },
-  {
     name: "Pro",
     description: "For serious job seekers",
-    monthlyPrice: 199,
-    annuallyPrice: 1990,
+    price: 500,
     features: [
+      "Free ATS checking",
       "Unlimited AI resumes",
-      "Advanced ATS scoring",
-      "Premium templates",
-      "Cover letter generator",
-      "Unlimited downloads",
-      "Priority email support"
+      "Unlimited downloads"
     ],
     highlight: true,
   },
   {
-    name: "Executive",
+    name: "Max",
     description: "White-glove career strategy",
-    monthlyPrice: 499,
-    annuallyPrice: 4990,
+    price: 800,
     features: [
-      "Everything in Pro",
+      "Free ATS checking",
+      "Free ATS enhancement",
       "LinkedIn profile optimization",
-      "1-on-1 career coaching call",
-      "Direct recruiter introductions",
-      "Dedicated account manager",
+      "Priority email support"
     ],
     highlight: false,
   }
 ]
 
 export default function PricingPage() {
-  const [isAnnual, setIsAnnual] = useState(false)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<typeof plans[0] | null>(null)
+  
+  // Fix scroll position glitch when navigating to this page
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   
   // Payment Modal State
   const [isProcessing, setIsProcessing] = useState(false)
@@ -122,30 +107,10 @@ export default function PricingPage() {
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-xl text-muted-foreground/80">
             Join 10,000+ professionals who landed their dream jobs using ROZGAR 24X7.
           </motion.p>
-          
-          {/* Billing Toggle */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}  className="mt-10 flex items-center justify-center gap-3">
-            <span className={`text-sm font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Monthly</span>
-            <button 
-              onClick={() => setIsAnnual(!isAnnual)}
-              className="relative w-14 h-8 bg-zinc-200 dark:bg-zinc-800 rounded-full p-1 transition-colors hover:bg-zinc-300 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
-            >
-              <motion.div 
-                layout
-                className="w-6 h-6 bg-white dark:bg-zinc-300 rounded-full shadow-md"
-                initial={false}
-                animate={{ x: isAnnual ? 24 : 0 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              />
-            </button>
-            <span className={`text-sm font-medium flex items-center gap-2 ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
-              Annually <span className="bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">Save 20%</span>
-            </span>
-          </motion.div>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full perspective-1000">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full perspective-1000">
            {plans.map((plan, i) => (
              <motion.div 
                key={plan.name}
@@ -168,8 +133,7 @@ export default function PricingPage() {
                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
                  <p className="text-sm text-muted-foreground min-h-[40px]">{plan.description}</p>
                  <div className="mt-6 flex items-baseline gap-1">
-                   <span className="text-4xl font-black">₹{isAnnual ? plan.annuallyPrice : plan.monthlyPrice}</span>
-                   <span className="text-muted-foreground">/{isAnnual ? 'yr' : 'mo'}</span>
+                   <span className="text-4xl font-black">₹{plan.price}</span>
                  </div>
                </div>
 
@@ -259,7 +223,7 @@ export default function PricingPage() {
                       {/* Price Summary */}
                       <div className="flex justify-between items-center py-3 border-b border-border/50 mb-6">
                         <span className="font-medium text-muted-foreground">Total due today</span>
-                        <span className="text-2xl font-black">₹{isAnnual ? selectedPlan.annuallyPrice : selectedPlan.monthlyPrice}</span>
+                        <span className="text-2xl font-black">₹{selectedPlan.price}</span>
                       </div>
 
                       <div className="space-y-3">
@@ -312,7 +276,7 @@ export default function PricingPage() {
                         {isProcessing ? (
                           <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Processing...</>
                         ) : (
-                          `Pay ₹${isAnnual ? selectedPlan.annuallyPrice : selectedPlan.monthlyPrice}`
+                          `Pay ₹${selectedPlan.price}`
                         )}
                       </Button>
                       
